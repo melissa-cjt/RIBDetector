@@ -11,5 +11,4 @@ RIBDetector is a simple yet effective inconsistency bug detecting tool for proto
 
 * Pyhton2.7, NLTK 
 
-* LLVM 4.0, Clang 4.0, wllwm
-
+* LLVM 4.0, Clang 4.0, wllwm, z3 solver
