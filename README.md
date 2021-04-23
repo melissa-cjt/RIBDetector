@@ -13,6 +13,6 @@ RIBDetector is a simple yet effective inconsistency bug detecting tool for proto
 
 * LLVM 4.0, Clang 4.0, wllvm, z3 4.8.10
 * 
-## RFC Rule Extract
+## RFC Rule Extraction
 
 **1. Run:**
