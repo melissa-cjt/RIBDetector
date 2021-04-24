@@ -17,7 +17,7 @@ The most important folders in RIBDetector's root directory are:
 
 	i. 'rfc_config.xml', example of configuration file describing the format of specific keywords and meta-info in BGP, OSPF and other routing protocols. Users can modify the file if needed.
    
-    ii. 'RFC4271', the draft Standard RFC of BGP. 
+    ii. 'RFC4271.txt', the draft Standard RFC of BGP. 
 
 3. 'output', directory containing examples of extracted rules, results of rule-specified operation identification and bug detection.
 
