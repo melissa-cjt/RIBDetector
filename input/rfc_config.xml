@@ -1,2 +1,5 @@
-//to be continue
-<page></page>
+<RFC>
+<error_handling>
+ 		<section_file>input/RFC4271_bgp_errhl.txt</section_file>	
+</error_handling>
+</RFC>
