@@ -1,7 +1,8 @@
 <RFC>
-<error_handling>
-  <section_file>
-  RFC4271_bgp_errhl.txt
-  </section_file>	
+  <page>RFC 4271                         BGP-4                      January 2006</page>
+  <error_handling>
+    <section_file>
+    RFC4271.txt
+    </section_file>	
 </error_handling>
 </RFC>
