@@ -1,0 +1,274 @@
+4.5.  NOTIFICATION Message Format
+
+   A NOTIFICATION message is sent when an error condition is detected.
+   The BGP connection is closed immediately after it is sent.
+
+   In addition to the fixed-size BGP header, the NOTIFICATION message
+   contains the following fields:
+
+      0                   1                   2                   3
+      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+      | Error code    | Error subcode |   Data (variable)             |
+      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+      Error Code:
+
+         This 1-octet unsigned integer indicates the type of
+         NOTIFICATION.  The following Error Codes have been defined:
+
+            Error Code       Symbolic Name               Reference
+
+              1         Message Header Error             Section 6.1
+
+              2         OPEN Message Error               Section 6.2
+
+              3         UPDATE Message Error             Section 6.3
+
+              4         Hold Timer Expired               Section 6.5
+
+              5         Finite State Machine Error       Section 6.6
+
+              6         Cease                            Section 6.7
+
+      Error subcode:
+
+         This 1-octet unsigned integer provides more specific
+         information about the nature of the reported error.  Each Error
+         Code may have one or more Error Subcodes associated with it.
+         If no appropriate Error Subcode is defined, then a zero
+         (Unspecific) value is used for the Error Subcode field.
+
+      Message Header Error subcodes:
+
+               1 - Connection Not Synchronized.
+               2 - Bad Message Length.
+               3 - Bad Message Type.
+
+      OPEN Message Error subcodes:
+
+               1 - Unsupported Version Number.
+               2 - Bad Peer AS.
+               3 - Bad BGP Identifier.
+               4 - Unsupported Optional Parameter.
+               5 - [Deprecated - see Appendix A].
+               6 - Unacceptable Hold Time.
+
+      UPDATE Message Error subcodes:
+
+               1 - Malformed Attribute List.
+               2 - Unrecognized Well-known Attribute.
+               3 - Missing Well-known Attribute.
+               4 - Attribute Flags Error.
+               5 - Attribute Length Error.
+               6 - Invalid ORIGIN Attribute.
+               7 - [Deprecated - see Appendix A].
+               8 - Invalid NEXT_HOP Attribute.
+               9 - Optional Attribute Error.
+              10 - Invalid Network Field.
+              11 - Malformed AS_PATH.
+
+      Data:
+
+         This variable-length field is used to diagnose the reason for
+         the NOTIFICATION.  The contents of the Data field depend upon
+         the Error Code and Error Subcode.  See Section 6 for more
+         details.
+
+         Note that the length of the Data field can be determined from
+         the message Length field by the formula:
+
+                  Message Length = 21 + Data Length
+
+   The minimum length of the NOTIFICATION message is 21 octets
+   (including message header).
+
+
+
+6.1.  Message Header Error Handling
+
+   All errors detected while processing the Message Header MUST be
+   indicated by sending the NOTIFICATION message with the Error Code
+   Message Header Error.  The Error Subcode elaborates on the specific
+   nature of the error.
+
+   The expected value of the Marker field of the message header is all
+   ones.  If the Marker field of the message header is not as expected,
+   then a synchronization error has occurred and the Error Subcode MUST
+   be set to Connection Not Synchronized.
+
+   If at least one of the following is true:
+
+      - if the Length field of the message header is less than 19 or
+        greater than 4096, or
+
+      - if the Length field of an OPEN message is less than the minimum
+        length of the OPEN message, or
+
+      - if the Length field of an UPDATE message is less than the
+        minimum length of the UPDATE message, or
+
+      - if the Length field of a KEEPALIVE message is not equal to 19,
+        or
+
+      - if the Length field of a NOTIFICATION message is less than the
+        minimum length of the NOTIFICATION message,
+
+   then the Error Subcode MUST be set to Bad Message Length.  The Data
+   field MUST contain the erroneous Length field.
+
+   If the Type field of the message header is not recognized, then the
+   Error Subcode MUST be set to Bad Message Type.  The Data field MUST
+   contain the erroneous Type field.
+
+
+6.2.  OPEN Message Error Handling
+
+   All errors detected while processing the OPEN message MUST be
+   indicated by sending the NOTIFICATION message with the Error Code
+   OPEN Message Error.  The Error Subcode elaborates on the specific
+   nature of the error.
+
+   If the version number in the Version field of the received OPEN
+   message is not supported, then the Error Subcode MUST be set to
+   Unsupported Version Number.  The Data field is a 2-octet unsigned
+   integer, which indicates the largest, locally-supported version
+   number less than the version the remote BGP peer bid (as indicated in
+   the received OPEN message), or if the smallest, locally-supported
+   version number is greater than the version the remote BGP peer bid,
+   then the smallest, locally-supported version number.
+
+   If the Autonomous System field of the OPEN message is unacceptable,
+   then the Error Subcode MUST be set to Bad Peer AS.  The determination
+   of acceptable Autonomous System numbers is outside the scope of this
+   protocol.
+
+   If the Hold Time field of the OPEN message is unacceptable, then the
+   Error Subcode MUST be set to Unacceptable Hold Time.  An
+   implementation MUST reject Hold Time values of one or two seconds.
+   An implementation MAY reject any proposed Hold Time.  An
+   implementation that accepts a Hold Time MUST use the negotiated value
+   for the Hold Time.
+
+   If the BGP Identifier field of the OPEN message is syntactically
+   incorrect, then the Error Subcode MUST be set to Bad BGP Identifier.
+   Syntactic correctness means that the BGP Identifier field represents
+   a valid unicast IP host address.
+
+   If one of the Optional Parameters in the OPEN message is not
+   recognized, then the Error Subcode MUST be set to Unsupported
+   Optional Parameters.
+
+   If one of the Optional Parameters in the OPEN message is recognized,
+   but is malformed, then the Error Subcode MUST be set to 0
+   (Unspecific).
+
+   If a BGP speaker that supports a certain capability determines that
+   its peer doesn't support this capability, the speaker MAY send a
+   NOTIFICATION message to the peer and terminate peering (see Section
+   "Extensions to Error Handling" for more details).  For example, a BGP
+   speaker may need to terminate peering if it established peering to
+   exchange IPv6 routes and determines that its peer does not support
+   Multiprotocol Extensions for BGP-4 [RFC4760].  The Error Subcode in
+   the NOTIFICATION message is then set to Unsupported Capability.  The
+   message MUST contain the capability or capabilities that cause the
+   speaker to send the message.  The decision to send the message and
+   terminate the peering is local to the speaker.  If terminated, such
+   peering SHOULD NOT be re-established automatically.
+
+   This document defines a new Error Subcode, Unsupported Capability.
+   The value of this Subcode is 7.  The Data field in the NOTIFICATION
+   message MUST list the set of capabilities that causes the speaker to
+   send the message.  Each such capability is encoded in the same way as
+   it would be encoded in the OPEN message.
+
+6.3.  UPDATE Message Error Handling
+
+   All errors detected while processing the UPDATE message MUST be
+   indicated by sending the NOTIFICATION message with the Error Code
+   UPDATE Message Error.  The error subcode elaborates on the specific
+   nature of the error.
+
+   Error checking of an UPDATE message begins by examining the path
+   attributes.  If the Withdrawn Routes Length or Total Attribute Length
+   is too large (i.e., if Withdrawn Routes Length + Total Attribute
+   Length + 23 exceeds the message Length), then the Error Subcode MUST
+   be set to Malformed Attribute List.
+
+   If any recognized attribute has Attribute Flags that conflict with
+   the Attribute Type Code, then the Error Subcode MUST be set to
+   Attribute Flags Error.  The Data field MUST contain the erroneous
+   attribute (type, length, and value).
+
+   If any recognized attribute has an Attribute Length that conflicts
+   with the expected length (based on the attribute type code), then the
+   Error Subcode MUST be set to Attribute Length Error.  The Data field
+   MUST contain the erroneous attribute (type, length, and value).
+
+   If any of the well-known mandatory attributes are not present, then
+   the Error Subcode MUST be set to Missing Well-known Attribute.  The
+   Data field MUST contain the Attribute Type Code of the missing,
+   well-known attribute.
+
+   If any of the well-known mandatory attributes are not recognized,
+   then the Error Subcode MUST be set to Unrecognized Well-known
+   Attribute.  The Data field MUST contain the unrecognized attribute
+   (type, length, and value).
+
+   If the ORIGIN attribute has an undefined value, then the Error Sub-
+   code MUST be set to Invalid Origin Attribute.  The Data field MUST
+   contain the unrecognized attribute (type, length, and value).
+
+   If the NEXT_HOP attribute field is syntactically incorrect, then the
+   Error Subcode MUST be set to Invalid NEXT_HOP Attribute.  The Data
+   field MUST contain the incorrect attribute (type, length, and value).
+   Syntactic correctness means that the NEXT_HOP attribute represents a
+   valid IP host address.
+
+   The IP address in the NEXT_HOP MUST meet the following criteria to be
+   considered semantically correct:
+
+      a) It MUST NOT be the IP address of the receiving speaker.
+
+      b) In the case of an EBGP, where the sender and receiver are one
+         IP hop away from each other, either the IP address in the
+         NEXT_HOP MUST be the sender's IP address that is used to
+         establish the BGP connection, or the interface associated with
+         the NEXT_HOP IP address MUST share a common subnet with the
+         receiving BGP speaker.
+
+   If the NEXT_HOP attribute is semantically incorrect, the error SHOULD
+   be logged, and the route SHOULD be ignored.  In this case, a
+   NOTIFICATION message SHOULD NOT be sent, and the connection SHOULD
+   NOT be closed.
+
+   The AS_PATH attribute is checked for syntactic correctness.  If the
+   path is syntactically incorrect, then the Error Subcode MUST be set
+   to Malformed AS_PATH.
+
+   If the UPDATE message is received from an external peer, the local
+   system MAY check whether the leftmost (with respect to the position
+   of octets in the protocol message) AS in the AS_PATH attribute is
+   equal to the autonomous system number of the peer that sent the
+   message.  If the check determines this is not the case, the Error
+   Subcode MUST be set to Malformed AS_PATH.
+
+   If an optional attribute is recognized, then the value of this
+   attribute MUST be checked.  If an error is detected, the attribute
+   MUST be discarded, and the Error Subcode MUST be set to Optional
+   Attribute Error.  The Data field MUST contain the attribute (type,
+   length, and value).
+
+   If any attribute appears more than once in the UPDATE message, then
+   the Error Subcode MUST be set to Malformed Attribute List.
+
+   The NLRI field in the UPDATE message is checked for syntactic
+   validity.  If the field is syntactically incorrect, then the Error
+   Subcode MUST be set to Invalid Network Field.
+
+   If a prefix in the NLRI field is semantically incorrect (e.g., an
+   unexpected multicast IP address), an error SHOULD be logged locally,
+   and the prefix SHOULD be ignored.
+
+   An UPDATE message that contains correct path attributes, but no NLRI,
+   SHALL be treated as a valid UPDATE message.
