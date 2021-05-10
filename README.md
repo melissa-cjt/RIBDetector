@@ -127,13 +127,13 @@ Examples of key structures and function arguments identified by our  tool are as
 Example of error handling rule violation detection:
 `bug_report`:
 ```
-Total rule number: 25  // Number of rules extracted from RFC 4271 about error handling
+Total rule number: 22  // Number of rules extracted from RFC 4271 about error handling
 Identified error handling operations: 61   // Number of error handling rule-specified operations 
                                            // identified in the source code implementation
 ===============
 Not hit rfc rule op: // The uncovered errorcode and errorsubcode
 3 8 
-Implemented rules/Total rules: 23/25  // The pecentage of rules covered by the implemetation
+Implemented rules/Total rules: 20/22  // The pecentage of rules covered by the implemetation
 ===============
 Rules voilation:
 Find operation: session_notification errorcode: 2 errorsubcode: 3 in function: parse_open 
