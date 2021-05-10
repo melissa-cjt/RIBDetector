@@ -58,7 +58,7 @@ python extract.py
 
 Examples of rules and meta-info extracted are as follows:
 
-`rule.json`:
+`rules.json`:
 ```
 Rules:[ // rule: (hold >0 && hold <3) ? set(errcode, [2,6]) : ε
     {
