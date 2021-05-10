@@ -71,21 +71,7 @@
 			}]
 			
 		},
-		{
-        "error_code":[1, 1],
-        "rfc_conds":[{
-            "rfc_cond": [
-                {
-                    "lhs": "x",
-                    "predicate": 33,
-                    "rhs": "0xffffffffffffffff"
-                }
-            ],
-            "keyword":"marker",
-            "type": 1
-        }]
 
-    },
 		{
 			"error_code":[1, 3],
 			"rfc_conds":[
@@ -239,29 +225,7 @@
 				"type": 3
 			}]
 		},
-		{
-			"error_code":[3, 4],
-			"rfc_conds":[
-			{
-				"rfc_cond": [{
-					"lhs": "x",
-					"predicate": 33,
-					"rhs": "64"
-				}],
-				"keyword":"flag",
-				"type": 1
-			},
-			{
-				"rfc_cond": [{
-					"lhs": "x",
-					"predicate": 33,
-					"rhs": "128"
-				}],
-				"keyword":"flag",
-				"type": 1
-			}
-			]
-		},
+		
 		{
         "error_code":[3, 8],
         "rfc_conds":[
@@ -292,23 +256,14 @@
         "error_code":[3, 6],
         "rfc_conds":[
         {
-            "rfc_cond": [
-                {
-                    "lhs": "x",
-                    "predicate": 33,
-                    "rhs": "0"
-                },
-                {
-                    "lhs": "x",
-                    "predicate": 33,
-                    "rhs": "1"
-                },
-                {
-                    "lhs": "x",
-                    "predicate": 33,
-                    "rhs": "2"
-                }
-            ],
+		"rfc_cond":[
+			{
+				"lhs":"x",
+				"predicate":34,
+				"rhs":"2"
+			}
+		],
+           
             "keyword":"origin",
             "connect":[1, 1],
             "type": 3
