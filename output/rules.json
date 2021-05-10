@@ -191,32 +191,12 @@
 					{
 						"lhs": "x",
 						"predicate": 33,
-						"rhs": "8"
+						"rhs": "6"
 					},
 					{
 						"lhs": "x",
 						"predicate": 33,
-						"rhs": "9"
-					},
-					{
-						"lhs": "x",
-						"predicate": 33,
-						"rhs": "10"
-					},
-					{
-						"lhs": "x",
-						"predicate": 33,
-						"rhs": "14"
-					},
-					{
-						"lhs": "x",
-						"predicate": 33,
-						"rhs": "15"
-					},
-					{
-						"lhs":"x",
-						"predicate": 33,
-						"rhs": "16"
+						"rhs": "7"
 					}
 	
 				],
@@ -332,10 +312,10 @@
                 {
                     "lhs": "x",
                     "predicate": 33,
-                    "rhs": "8"
+                    "rhs": "6"
                 }
             ],
-            "keyword":"as4_aggregator_length",
+            "keyword":"aggregator_length",
             "type": 1
         },
         {
@@ -346,10 +326,11 @@
                     "rhs": "4"
                 }
             ],
-            "keyword":"originator_id_length",
+            "keyword":"aspath_length",
             "type": 1
         }
         ]
+
     },
 		{
             "error_code":[3, 10],
