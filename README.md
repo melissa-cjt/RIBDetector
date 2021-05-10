@@ -106,11 +106,11 @@ extract-bc <target_dir>
 ```
 
 ## Inconsistency Bug Detection
-Suppose the target protocol implementation is complied into a .bc file named bgp.bc, to perform inconsistency bug detection on the implementation, run:
+Suppose the target protocol implementation is complied into a .bc file named bgpd.bc, to perform inconsistency bug detection on the implementation, run:
 
 ```
-opt -load LLVMRFC.so -Identify <bgp.bc> /dev/null
-opt -load LLVMRFC.so <detection_option> <bgp.bc> /dev/null  
+opt -load LLVMRFC.so -Identify <bgpd.bc> /dev/null
+opt -load LLVMRFC.so <detection_option> <bgpd.bc> /dev/null  
 
 detection_option:
 -PktDetect: detect violation of packet rules.
