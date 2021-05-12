@@ -1,13 +1,20 @@
-Total rule number: 25  
-Identified error handling operations: 61                                
-===============
-Not hit rfc rule op: 
+Reading configuration .....
+rde_update_err: 1 2 
+session_notification: 1 2 
+================
+Rule checking ......
+============================
+Total rule number 22
+Identified error handling operations: 61
+===================
+Not hit rfc rule Op: 
 3 8 
-Implemented rules/Total rules: 23/25  
-===============
-Rules voilation:
-Find operation: session_notification errorcode: 2 errorsubcode: 3 in function: parse_open 
-RFC conds: x  32  0 && x  32  y 
-Impl Conds: if.end49 ntohl(bgpid) 32 0    
-[ERROR] Impl Conds do not comply with RFC Conds 
-==========
+===================
+Rules Violation:
+Find operation: session_notification errorcode: 2 errorsubcode: 3 in function: parse_open
+RFC Conds: x  32  0
+x  32  y
+Impl Conds: BR: ntohl(bgpid) 32 0
+[ERROR] Impl Conds do not comply with RFC Conds
+====
+Implemented rules/Total rules 20/22
