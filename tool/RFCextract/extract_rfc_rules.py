@@ -946,12 +946,6 @@ class RFC_Extract():
 
 		constraint_flag = 0
 		connect_flag = 0	
-		#print pos
-		sent = re.sub(r'or it is (.*) but is not',"|| !=", sent)
-
-		if ">" in sent or "<" in sent or "=" in sent:
-			return ""
-
 
 		pattern = {}
 
