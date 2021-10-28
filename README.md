@@ -17,7 +17,7 @@ The most important folders in RIBDetector's root directory are:
 
     i. **'doc/rfcxxx.txt'** contains the RFC document of network protocol. 
     
-    ii. **'config/rfc_config_xx.json'**, example of configuration file describing the format of specific keywords and meta-info in BGP, OSPF and other routing protocols. Users can modify the file if needed.   
+    ii. **'config/rfc_config_xx.json'**, example of configuration file describing the format of specific keywords and meta-info in BGP, EIGRP and DHCP protocols. Users can modify the file if needed.   
     
     iii. **'proc/xx.bc'**, example of  .bc file of network protocol implementations complied with LLVM.
 
@@ -27,9 +27,9 @@ The most important folders in RIBDetector's root directory are:
 	i. **'result_of_extractor/rule-xx.json or meta-info-xx.json'**: machine readable rules/meta-info extracted from RFC documents under the input directory, which will be used as input of operation identification and bug detection.
 
 	
-    ii. **'result_of_identify/Identify_xx.json'**: structures or function arguments identified by RIBDetector in source code implementations, which will be further used to investigate rule-specified operations and detect inconsistency bugs.     
+    ii. **'result_of_identify/Identify_xx.json'**: key structures or their corresponding variables identified by RIBDetector in source code implementations, which will be further used to investigate rule-specified operations and detect inconsistency bugs.     
    
-    iii. **'inconsistency_bug/bug_report_xx'**: bug report.
+    iii. **'inconsistency_bug/bug_report_xx'**: inconsistency bugs reported by RIBDetector.
 # How to use
 
 To use RIBDetector, it is necessary to perform the following steps:
@@ -59,9 +59,9 @@ CC=wllvm CXX=wllvm++  ./configure  CFLAGS="-g -O0"
 extract-bc <target_dir> 
 ```
 
-## Run Script
+## Run RIBDetector
 
-To  perform inconsistency bug detection on the implementation, run:
+To  perform inconsistency bug detection on the implementation, run the following command under tool directory:
 
 ```
 tool/run_script.py -bc <input bitcode> -config <configure file> 
@@ -71,11 +71,13 @@ tool/run_script.py -bc <input bitcode> -config <configure file>
 eg: tool/run_script.py -bc proc/openbgpd.bc -config config/rfc_config_bgp.json
 ```
 
-## Result
+## Results of RIBDetector
 
-**step 1: Rule Extractor**
+**Result of Rule Extraction**
 
-Examples of rules and meta-info extracted are as follows: `result_of_extractor/meta-info-bgp.json`
+Examples of rules and meta-info extraction result can be found under output/result_of_extractor directory.
+
+e.g.`meta-info-bgp.json and rule-bgp.json`
 
 ```
    "Meta-Info": {
@@ -125,9 +127,11 @@ Examples of rules and meta-info extracted are as follows: `result_of_extractor/m
      ]
 ```
 
-**step 2: Analysis Scope Identifier**
+**Result of Analysis Scope Identifier**
 
-Examples of key structures and function arguments identified by our  tool are as follows: `result_of_identify/Identify_bgp.json`:
+Examples of key structures or their corresponding variables identified by our tool can be found under output/result_of_identify directory. 
+
+e.g. `Identify_bgp.json`:
 
 ```
 {
@@ -166,9 +170,11 @@ Examples of key structures and function arguments identified by our  tool are as
 
 ```
 
-**step 3: Violation Detector**
+**Result of Violation Detection**
 
-Example of error handling rule violation detection:`inconsistency_bug/bug_report_bgp`:
+Example of rule violations (i.e. inconsistency bugs) can be found under output/inconsistency directory.
+
+i.e. `bug_report_bgp`:
 
 ```
 =============
