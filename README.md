@@ -130,7 +130,6 @@ e.g.`meta-info-bgp.json and rule-bgp.json`
 **Result of Analysis Scope Identifier**
 
 Examples of key structures or their corresponding variables identified by our tool can be found under output/result_of_identify directory. 
-
 e.g. `Identify_bgp.json`:
 
 ```
