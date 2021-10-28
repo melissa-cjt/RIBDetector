@@ -1,9 +1,0 @@
-{
- "Function_ARG": 1, 
- "keyword": ["error", "notify", "err", "notification", "subcode", "code"], 
- "meta-infos": [[1, 2, 3, 4, 5, 6], [1, 2, 3, 4, 5, 6, 8, 9, 10, 11]], 
- "Function_SW": 0, 
- "predict_type": "Function", 
- "Dir": "NONE", 
- "value_num": 1
-}
