@@ -176,7 +176,7 @@ CC=wllvm CXX=wllvm++  ./configure  CFLAGS="-g -O0"
 extract-bc <target_dir> 
 ```
 
-## Inconsistency Bug Detection   提供多个例子来丰富github内容。
+## Inconsistency Bug Detection 
 Suppose the target protocol implementation is complied into a .bc file named bgpd.bc, to perform inconsistency bug detection on the implementation, run:
 
 ```
