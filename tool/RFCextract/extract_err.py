@@ -279,9 +279,7 @@ class RFC_ERR_Rules_Extract(Extract, RFC_Extract):
 						else:
 							common_rules += copy.deepcopy(rules)
 				
-				# 	print errc 
-				# print(common_rules)
-				# print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+				
 					
 				if eflag:
 				
