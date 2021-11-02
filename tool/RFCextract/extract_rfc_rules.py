@@ -90,18 +90,7 @@ class RFC_Extract(object):
 		
 			line = line.replace(" it ", " "+fn+" ")
 			line = line.replace("this field", " "+fn+" ")
-		# print line
 
-		# line = line.lower()
-		
-		# # print(line)
-		# self.key_words.sort(key=lambda i:len(i), reverse=True)
-		# for kw in self.key_words:
-		# 	# print(kw)
-		# 	if re.findall(kw, line, flags=re.IGNORECASE):
-		# 		line = line.replace(kw.lower(), "KW_"+ kw.replace(" ","_"))
-		# # print line
-		# print(line)
 		nwsents = []
 		sents = nltk.sent_tokenize(line)
 
@@ -214,12 +203,7 @@ class RFC_Extract(object):
 
 		flag = False
 		conn =[]
-		# if re.findall(r'either (.*) or (.*)', sent):
-		# 	nw_sent = re.finall(r'either (.*) or (.*)', sent)[0]
-		# 	nw_pos = pos.split(" CC ")
-		# 	nw_pos = [x for x in nw_pos if x != '']
-		# 	conn.append(1)
-		# 	flag = True
+	
 		if " and " in sent:
 			nw_sent = sent.split(" and ")
 			# print nw_sent
@@ -362,10 +346,7 @@ class RFC_Extract(object):
 
 	def unclear_pkt_rule(self, fname, neg):
 		fname = fname.replace("_"," ")
-		# print "ok"
-		# print self.pkt_rul
-		# if not self.pkt_rul:
-		# 	return False, ""
+	
 
 		for rul in self.pkt_rul["PacketField"]:
 
@@ -380,9 +361,7 @@ class RFC_Extract(object):
 					return True, rul["rfc_conds"]
 				else:
 					return True, rul["rfc_conds"]
-			# for r in rul["rfc_conds"]:
-			# 	if fname  in r["keyword"]:
-			# 		return True, rul["rfc_conds"]
+			
 		return False, ""
 	def unclear_pkt_rule_nw(self, fname, neg):
 
@@ -488,9 +467,6 @@ class RFC_Extract(object):
 		predicate = 0
 		rhs =""
 		flag = False
-		# print(sent)
-		# print(pos)
-		# print("----")
 
 		
 		if "IN JJS CD" in pos:
@@ -571,9 +547,7 @@ class RFC_Extract(object):
 				if not rhs.isdigit():
 					rhs = str(self.word2num[rhs]) 
 				flag = True
-		# elif "VBZ JJ TO" in pos:
-		# 	if "identical to" in sent:
-		# 		predicate = 3 
+	
 
 		elif "JJR IN " in pos:
 			# print "JJR IN"
@@ -582,11 +556,7 @@ class RFC_Extract(object):
 
 			if "minimum " in sent:
 				fname = self.getkeylf(sent.split(" "))
-				# print sent
-				# print "doadafa"
-				# print(fname)
-
-				# minflag, rhs = self.min_pkt_rule(fname, sent)
+			
 				minflag, rhs = self.min_pkt_rule_nw(fname, sent)
 				# print rhs
 
@@ -609,8 +579,7 @@ class RFC_Extract(object):
 			"keyword":""
 		}
 
-		# print "model keywords match!" 
-		# must be
+		
 		for eq in self.equal_pattern.keys():
 			
 			if re.findall(eq, pos):
@@ -621,9 +590,6 @@ class RFC_Extract(object):
 				res = a[0]
 				lhstag = res[0]
 				rhstag = res[1]
-
-				# print len(lhstag.split(" "))
-				# print len(rhstag.split(" "))
 
 				sp_sent = sent.split(" ")
 				lpos = len(lhstag.split(" "))
@@ -646,13 +612,7 @@ class RFC_Extract(object):
 
 				if self.model_key_filter(keysent):
 					continue
-				# print( "================")
-				# print(lhssent) 
-				# print (lhstag)
-				# print(rhssent) 
-				# print (rhstag)
-				# print (predsent)
-				# print ("=================")
+			
 				rule = {
 					"lhs": "x",
 					"predicate": 0,
@@ -667,19 +627,14 @@ class RFC_Extract(object):
 				# print rule["predicate"]
 				
 				nw_sent, nw_tag, count = self.hasconnect(rhssent, rhstag)
-				# print (count)
-				# print( nw_sent , nw_tag)
+				
 				if count == 0:
 					
-					# pre, r = self.sub_compare(nw_sent[0], nw_tag[0])
-					# print pre, r
+					
 					nw_sent, nw_tag, conn = self.subconnect(rhssent, rhstag)
 
 					if conn:
-						# print(nw_sent)
-						# print(nw_tag)
-						# print(conn)
-
+						
 						for i in range(0, len(nw_tag)):
 
 							if self.hasmodel(nw_tag[i]):
@@ -721,8 +676,6 @@ class RFC_Extract(object):
 							rules["rfc_cond"].append(rule)
 							rules["type"] = 1
 							flag = True
-						# else:
-					# 	print "not rule"
 					
 						pass
 					# print(lhssent)
@@ -733,16 +686,9 @@ class RFC_Extract(object):
 					rule["rhs"], rulflag = self.process_rhs(nw_sent[0], nw_tag[0])
 					if rulflag:
 						rules["rfc_cond"].append(copy.deepcopy(rule))
-						# rules["type"] = 1
-
-					# print "sent: "+str(len(nw_sent))
-					# print "count:"+str(count)
-					nw_sent, nw_tag, conn = self.subconnect(nw_sent[1], nw_tag[1])
-
-					# print(nw_sent)
-					# print(nw_tag)
-					# print(conn)
 					
+				
+					nw_sent, nw_tag, conn = self.subconnect(nw_sent[1], nw_tag[1])
 
 					for i in range(0, len(nw_tag)):
 
@@ -761,9 +707,7 @@ class RFC_Extract(object):
 							rule["rhs"] = r
 							rules["rfc_cond"].append(copy.deepcopy(rule))
 						
-						
-						# print pre, r
-						
+					
 					if conn:
 						rules["type"]=3
 						rules["connect"] = conn	
@@ -789,9 +733,7 @@ class RFC_Extract(object):
 				lhstag = res[0]
 				rhstag = res[1]
 
-				# print len(lhstag.split(" "))
-				# print len(rhstag.split(" "))
-
+			
 				sp_sent = sent.split(" ")
 				lpos = len(lhstag.split(" "))
 				prepos = len(sp_sent) -len(rhstag.split(" "))
@@ -809,12 +751,6 @@ class RFC_Extract(object):
 				if self.model_key_filter(keysent):
 					continue
 				
-
-				# print lhssent
-				# print lhstag
-				# print rhssent
-				# print rhstag
-				# print predsent
 
 				rule = {
 					"lhs": "x",
@@ -845,11 +781,7 @@ class RFC_Extract(object):
 					rules["keyword"]=self.getkeylf(lhssent.split(" "))
 				elif count == 1:
 
-					# print nw_sent
-
-					# print "sent: "+str(len(nw_sent))
-					# print "count:"+str(count)
-
+				
 					nw_sent, nw_tag, conn = self.subconnect(nw_sent[0], nw_tag[0])
 
 					# print(nw_sent) 
@@ -923,11 +855,6 @@ class RFC_Extract(object):
 				rhssent = " ".join(rhssent)
 				keysent = " ".join(predsent)
 
-				# print lhssent
-				# print rhssent
-				# print keysent
-				# # print eq
-				# print predtag
 
 				rule = {
 					"lhs":"x",
@@ -935,14 +862,10 @@ class RFC_Extract(object):
 					"rhs": ""
 				}
 
-				# keysent = keysent.replace("is ","")
-				
-
+		
 				nw_sent, nw_tag, conn = self.subconnect(keysent+" "+ rhssent, predtag+" "+rhstag)
 
-				# print nw_sent
-				# print nw_tag
-				# print conn
+				
 				rulcount=0
 				# print(nw_tag)
 
@@ -963,8 +886,7 @@ class RFC_Extract(object):
 					rules["connect"] = conn	
 				else:
 					rules["type"]=1
-				# print lhssent
-				# print self.getkeylf(lhssent)
+
 				
 				rules["keyword"]=self.getkeylf(lhssent.split(" "))
 
@@ -972,9 +894,7 @@ class RFC_Extract(object):
 					flag = False
 				else:
 					flag = True
-				# print(rules)
-				# for i in range(0, len(nw_tag)):
-
+			
 				break
 		
 		return flag , rules, cflag,
@@ -991,8 +911,7 @@ class RFC_Extract(object):
 		}
 
 		if re.findall("(.*) (VBZ|VBP) RB ", pos):
-			# print "ok"
-
+		
 			if re.findall("(.*) (VBZ|VBP) RB CD", pos):
 				pass
 				flag = False
@@ -1003,7 +922,7 @@ class RFC_Extract(object):
 					"rhs": ""
 				}
 				a = re.findall("(.*) (VBZ|VBP) RB (.*)", pos)
-				# print a
+				
 				res = a[0]
 				lhstag = res[0]
 				rhstag = res[2]
@@ -1023,24 +942,16 @@ class RFC_Extract(object):
 				rhssent = sp_sent[-rpos: ]
 				predsent = sp_sent[lpos: prepos]
 
-				# if self.verb_key_filter(rhssent[0]) or self.verb_key_filter(predsent):
-				# 	return False, rules
 
 				lhssent = " ".join(lhssent)
 				rhssent = " ".join(rhssent)
 				keysent = " ".join(predsent)
 
-				# print lhssent
-				# print lhstag
-				# print rhssent
-				# print rhstag
-				# print predsent
+				
 				if err:
 
 					if self.unclear(sent):
-						# print "[LOG] Is unclear !"
-						# print fname
-						# flag, nwrules = copy.deepcopy(self.unclear_pkt_rule(fname, True))
+						
 						flag, nwrules = copy.deepcopy(self.unclear_pkt_rule_nw(fname, True))
 						# print flag
 						if not flag:
@@ -1073,12 +984,7 @@ class RFC_Extract(object):
 				a = re.findall("(.*) (VBZ|VBP) CD", pos)
 
 				lhstag = a[0][0]
-				# print(lhstag)
-				# # print sent				
-
-				# print len(lhstag.split(" "))
-				# print len(rhstag.split(" "))
-
+			
 				sp_sent = sent.split(" ")
 				lpos = len(lhstag.split(" "))
 				lhssent = sp_sent[0:lpos]
@@ -1150,17 +1056,10 @@ class RFC_Extract(object):
 				rhssent = " ".join(rhssent)
 				keysent = " ".join(predsent)
 
-				# print lhssent
-				# print lhstag
-				# print rhssent
-				# print rhstag
-				# print predsent
 				if err:
 
 					if self.unclear(rhssent):
-						# print "[LOG] Is unclear !"
-						# print fname
-						# flag, nwrules = copy.deepcopy(self.unclear_pkt_rule(fname, True))
+						
 						flag, nwrules = copy.deepcopy(self.unclear_pkt_rule_nw(fname, True))
 						if not flag:
 							# print rhssent
@@ -1210,8 +1109,7 @@ class RFC_Extract(object):
 		
 		if not cflag:
 			isverb , rules = self.verb_keywords_match(sent, pos, err)
-			# print sent
-			# print isverb, rules
+			
 			if isverb:
 				# print rules
 				return rules
@@ -1226,16 +1124,11 @@ class RFC_Extract(object):
 			
 			if "KW_" not in sent:
 				continue
-			# print(sent)
-			# print(pos)
+			
 			word = nltk.word_tokenize(sent)
 			tag = nltk.pos_tag(word)
 			sentence, pos = self.get_sent_speach(tag)
-			# print(sentence)
-			# print(pos)
 			
-
-			# print " "
 			rules = self.pos_pattern_match_nw2(sentence, pos, err, False)
 			
 			if rules:
