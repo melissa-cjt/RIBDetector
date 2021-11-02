@@ -16,14 +16,14 @@ Inconsistency Bugs:2
 The result of state transistion in ../output/result_of_extractor/fsmrule-pktrule_rfc4271.json
 Rule Violation: 
 Rule: ck_bf(state == OpenSent && event == Event_0, [sends the NOTIFICATION, set(state == Idle)])
-[ERROR] UnImpl action 0
+[ERROR] UnImpl action
 -------------
 Rule Violation: 
 Rule: ck_bf(state == OpenConfirm && event == Event_0, [sends the NOTIFICATION, set(state == Idle)])
-[ERROR] UnImpl action 0
+[ERROR] UnImpl action
 -------------
 Rule Violation: 
 Rule: ck_bf(state == Established && event == Event_0, [sends the NOTIFICATION, set(state == Idle)])
-[ERROR] UnImpl action 0
+[ERROR] UnImpl action
 -------------
 Inconsistency bugs: 3
