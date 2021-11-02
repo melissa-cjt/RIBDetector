@@ -47,8 +47,6 @@ class RFC_PKT_Rules_Extract(Extract, RFC_Extract):
 		f = open(self.section_file,"r")
 		lines = f.readlines()
 		f.close()
-		# print self.key_words
-		# print self.field_bw_list
 
 		message_field = []
 		field_regx = ""
@@ -71,9 +69,7 @@ class RFC_PKT_Rules_Extract(Extract, RFC_Extract):
 		oldname = "SECTION_RULES"
 		for line in lines:
 			pline = line.strip()
-			# print pline
-			# print("-------")
-			# print(pline)
+		
 			if line != "\n":
 
 				space = len(line) -len(pline)
@@ -92,8 +88,7 @@ class RFC_PKT_Rules_Extract(Extract, RFC_Extract):
 				field_section[section_name]["SECTION_RULES"] = []
 				fflag = False
 				continue
-			# print "ok"
-			# print line
+		
 			if not iswrap:
 
 				tmpline = pline.split(rf)
@@ -109,13 +104,11 @@ class RFC_PKT_Rules_Extract(Extract, RFC_Extract):
 
 
 			elif pline.rstrip(rf) in message_field:
-				# print(line +"------------------")
-				# print("is rstrip field")
+			
 				fieldname = pline.rstrip(rf)
 
 				field_regx = pline.replace(fieldname, "(.*)")
-				# print field_regx
-				# print fieldname
+			
 				
 				field_section[section_name][fieldname]=[]
 				struct_list[fieldname] = []
@@ -123,24 +116,18 @@ class RFC_PKT_Rules_Extract(Extract, RFC_Extract):
 				oldspace = space
 				continue
 			elif pline.endswith(rf):
-				# print("========")
-
-				# print("is endswith")
-
+			
 				if self.isfixedValuetitle(pline):
 					continue
 				
 				tmp = pline.rstrip(rf)
-				# print("sss")
-				# if ")" in tmp:
-				# 	continue
-				# print(tmp)
+				
 				doc = nlp(tmp)
 				isother = False
 
 				if not self.isPktMeta(tmp):
 
-				# print(len(doc.noun_chunks))
+				
 					for chunk in doc.noun_chunks:
 						# print("chunk")
 						if chunk.text == tmp:
@@ -181,8 +168,6 @@ class RFC_PKT_Rules_Extract(Extract, RFC_Extract):
 					if oldspace <= space:
 						# print(pline)
 						field_section[section_name][fieldname].append(pline)
-						# oldname = fieldname
-						# print("in field", oldspace)
 						
 					else:
 						field_section[section_name]["SECTION_RULES"].append(pline)
@@ -414,11 +399,7 @@ class RFC_PKT_Rules_Extract(Extract, RFC_Extract):
 					tmp =[]
 			else:
 				tmp.append(line.strip())
-				# section_list[section_name].append(line)
-		# print section_list
-		pass
-		# print self.key_words
-
+		
 		self.get_rule_sentence(section_list)
 		
 	
@@ -463,17 +444,12 @@ class RFC_PKT_Rules_Extract(Extract, RFC_Extract):
 		pkt_rules={}
 
 		for sec, fname in field_section.items():
-			# print("----------------------")
-			# print("Section:", sec)
-			# print(fname)
 			
 			pkt_rules[sec]={}
 			
 			
 			for fn, sen in fname.items():
-				# print("--------")
-				# print("filename:", fn)
-				# print fn, "==="
+				
 				pkt_rules[sec][fn]={}
 
 				subsen, submeta, subflag = self.get_subfname(sen, fn, rf, nlp)
@@ -483,9 +459,6 @@ class RFC_PKT_Rules_Extract(Extract, RFC_Extract):
 					for subn, subs in subsen.items():
 						pkt_rules[sec][fn][subn] = {}
 
-
-						# print("---")
-						# print("subname:",subn) 
 						self.add_key_words(subn)
 					
 						meta, nw_sen = self.get_pkt_meta(subs)
@@ -498,11 +471,9 @@ class RFC_PKT_Rules_Extract(Extract, RFC_Extract):
 						if not nw_sen:
 							continue
 						s =self.pre_process_rules_nw(nw_sen, fn, True)
-						# print()
-						# print(s)
+					
 						rules = self.get_common_rules_nw(s, False)
-						# print(rules)
-						# # print rules
+						
 
 						pkt_rules[sec][fn][subn]["rules"]=rules
 				
@@ -538,11 +509,9 @@ class RFC_PKT_Rules_Extract(Extract, RFC_Extract):
 
 		with open("../output/result_of_extractor/meta-info-"+self.section_file.split("/")[-1].split(".")[0]+".json",'w') as f:
 			json.dump(self.json_tmp, f, indent=4)
-			# print "ok"
-			# json.dump(self.struct_configure, f,indent=4)
-		# print( "===========================")
+			
 		self.write_in_json(pkt_rules)
-		# self.write_meta_in_json(pkt_rules)
+		
 
 	def write_in_json(self, pkt_rules):
 		
@@ -646,8 +615,6 @@ class RFC_PKT_Rules_Extract(Extract, RFC_Extract):
 
 			if line == '\n':
 				if tmp:
-					# tmp = " ".join(tmp)
-					# tmp = self.pre_process_rules_nw(tmp, "",False)
 					tmp = " ".join(tmp)
 					section_list[sname].append(tmp)
 					tmp =[]
@@ -738,65 +705,12 @@ class RFC_PKT_Rules_Extract(Extract, RFC_Extract):
 						
 							section_rule[sec].append(rules)
 
-						# sent = self.mark_keywords(sent)
-						# word = nltk.word_tokenize(sent)
-						# tag = nltk.pos_tag(word)
-						# # print word
-						# sentence, pos = self.get_sent_speach(tag)
-
-						# # print "###########################"
-						# print sentence
-						# rules = self.pos_pattern_match_nw2(sentence, pos,False, True)
-						# print rules
+						
 			print( "-----------")
 
 		print(section_rule) 
 		return section_rule
-	# def pkt_format_templete(self):
-
-	# 	for pkt in self.pkts:
-
-	# 		if pkt.find("bw_file") is not None:
-
-	# 			self.bw_file = pkt.find("bw_file").text
-
-	# 			self.get_picture_bw()
-
-	# 		if pkt.find("section") is not None:
-	# 			pass
-
-	# 		elif pkt.find("section_file") is not None:
-
-
-	# 			self.section_file = pkt.find("section_file").text
-
-	# 			self.pkt_temp = pkt.find("template").text
-	# 			#print self.pkt_temp
-
-	# 			if self.pkt_temp == "A":
-
-	# 				section = self.template_A_parse(pkt)
-	# 				# bitwidth, common_rules = self.get_pkt_rules(section)
-
-	# 				rules = self.get_pkt_rules(section)
-	# 				self.write_in_xml(rules)
-
-	# 				self.write_key_words(self.section_file)
-
-	# 			elif self.pkt_temp == "B":
-	# 				section = self.template_B_parse(pkt)
-					
-	# 				rules = self.get_pkt_rules(section)
-	# 				self.write_in_xml(rules)
-
-	# 				self.write_key_words(self.section_file)
-	# 				# self.pkt_temp = pkt.find("template_B")
-	# 				pass
-
-	# 		else:
-	# 			print "ERROR: Please offer the rfc document for analysis!"
-	# 			sys.exit()
-
+		self.write_in_xml(rules)
 	
 
 	def get_field_bw(self, bw):
@@ -823,8 +737,7 @@ class RFC_PKT_Rules_Extract(Extract, RFC_Extract):
 			bw_name = re.findall(r'(.*) \(\d+\)',bw_name)
 			bw_name = bw_name[0].strip()
 			
-		# bw_name= bw_name.strip()
-		# print bw_len, bw_name
+		
 		return bw_len, bw_name
 		
 
