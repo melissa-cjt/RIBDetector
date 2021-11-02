@@ -68,7 +68,7 @@ tool/run_script.py -bc <input bitcode> -config <configure file>
 -bc                .bc file of the implementation
 -config            configuration file of the Rule extractor of the protocol  
 
-eg: tool/run_script.py -bc proc/openbgpd.bc -config config/rfc_config_bgp.json
+eg: python run_script.py -bc ../input/proc/openbgpd.bc -config ../input/config/rfc_config_bgp.json
 ```
 
 ## Results of RIBDetector
