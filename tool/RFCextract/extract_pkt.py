@@ -462,12 +462,6 @@ class RFC_PKT_Rules_Extract(Extract, RFC_Extract):
 		# print(field_section)
 		pkt_rules={}
 
-		# for sec , fname in field_section.items():
-		# 	print(sec)
-		# 	for fn, sen in fname.items():
-		# 		print(fn)
-		# 		print(sen)
-		# mt_if = {}
 		for sec, fname in field_section.items():
 			# print("----------------------")
 			# print("Section:", sec)
@@ -580,22 +574,7 @@ class RFC_PKT_Rules_Extract(Extract, RFC_Extract):
 					rule["Cond"]=rul["rules"]
 				
 
-				# if rul["meta"]:
-
-				# 	rule["Cond"] = self.change_meta2rule(rul["meta"], fn)
-
-					# print rul["meta"]
-					# rfc_rule["keyword"]=fn+" type"
-					# for k, v in rul["meta"].items():
-					# 	meta_rule["rhs"] = v
-					# 	rfc_rule["rfc_cond"].append(copy.deepcopy(meta_rule))
-					# 	rfc_rule["connect"].append(2)
-					# # rule["type"] = 3
-					# rfc_rule["type"] = 3
-					# rule["rfc_conds"].append(copy.deepcopy(rfc_rule))
-					# rfc_rule["rfc_cond"]=[]
-					# rfc_rule["connect"] = []
-					# rfc_rule["type"] =1
+				
 				self.Rules["Rules"].append(copy.deepcopy(rule))
 				rule={}
 		isExists = os.path.exists("../output/tmp")
@@ -630,16 +609,14 @@ class RFC_PKT_Rules_Extract(Extract, RFC_Extract):
 			json.dump(meta_infos, f, indent=4)
 	def get_pkt_rules(self):
 
-		if self.pkt_ftype == 0:    # for dhcp 's type 
+		if self.pkt_ftype == 0:    
 			self.pkt_format_unsepcial()
-		elif self.pkt_ftype == 1:   # for bgp 's type
+		elif self.pkt_ftype == 1:  
 			self.pkt_format_rule()
-			# self.pkt_format_rule_test()
-		elif self.pkt_ftype == 2:   # option 
+			
+		elif self.pkt_ftype == 2:  
 			self.pkt_format_section()
-			# self.pkt_format_unsepcial()
-
-
+			
 		pass 
 	def pkt_format_section(self):
 
