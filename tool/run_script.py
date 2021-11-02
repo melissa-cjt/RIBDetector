@@ -14,10 +14,10 @@ if __name__ == '__main__':
 
     if args.bitcode:
         bc_path = args.bitcode
-        # print(bc_path)
+      
     if args.configuration:
         config_path = args.configuration
-        # print(config_path)
+       
         f = open(config_path,'r')
         json_data = json.load(f)
         
@@ -37,17 +37,13 @@ if __name__ == '__main__':
 
         fsm_rule = "../output/result_of_extractor/fsmrule-"+raw_path
         fsm_prule = "../output/result_of_Identify/fsmprule.json"
-        
-        # pktrul_info_path = "../output/result_of_extractor/pktrule-"+meta_info_path
-        # fsmrule_info_path = "../output/result_of_extractor/fsmrule-"+meta_info_path
-        
 
 
     cmd1 ="cd ../input && python extract.py "+config_path
     print("step 1: run Rule Extractor  ...")
     print("Cmd: ",cmd1)
     print(os.system(cmd1))
-    # print(os.system("pwd"))
+  
 
     cmd2 = "./rfc --Identify "+bc_path+" "+meta_info_path
     print("step 2: run Identifier  ...")
@@ -59,14 +55,12 @@ if __name__ == '__main__':
     cmd3 = "./rfc --ErrDetect "+bc_path+" "+Identify_errule+" "+errrule_info_path+" > ../output/inconsistency_bug/bug_report_"+raw_path.replace(".json",".txt")+" 2>&1"
     print("step3: Error Handling vailation detection ...")
     print("Cmd:", cmd3)
-    # print("--------------------------------")
-    # print("The result of the Error Hanlding detection in RFC "+ json_data["filename"])
+  
     print(os.system(cmd3))
 
     cmd4 = "./rfc --FSMDetect "+bc_path+" "+Identify_errule
     print("step4: State Machine vailation detection ...")
-    # print("Cmd:", cmd4)
-   
+ 
 
     cmd5 ="python RFCextract/fsm_compare.py "+fsm_rule+ " "+fsm_prule+" >>  ../output/inconsistency_bug/bug_report_"+raw_path.replace(".json",".txt")+" 2>&1"
     print("Cmd:", cmd4)
@@ -74,12 +68,4 @@ if __name__ == '__main__':
     print(os.system(cmd4))
     print(os.system(cmd5))
     
-    # identify_path = "../output/res_of_identify/Identify.json"
-
-    # cmd3 = "rfc --ErrDetect "+ bc_path+" "+identify_path
-    
-
-
-
-
    
