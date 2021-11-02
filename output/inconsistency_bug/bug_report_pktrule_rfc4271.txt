@@ -1,0 +1,29 @@
+The Result of Error Handling in RFC doc : ../output/result_of_extractor/errrule-pktrule_rfc4271.json
+===================
+Rule violation: 
+Rule:  
+chk_bf(nexthop == 0 , set(3, 8))
+[Error] Unimpl the Op :3 8 
+===================
+Rules Violation:
+Location: In Function: parse_open
+RFC Conds: chk_bf(id == 0  ||  id == id , set(2, 3))
+[ERROR] Impl Conds do not comply with RFC Conds
+====
+==================
+Inconsistency Bugs:2
+----------------------------------
+The result of state transistion in ../output/result_of_extractor/fsmrule-pktrule_rfc4271.json
+Rule Violation: 
+Rule: ck_bf(state == OpenSent && event == Event_0, [sends the NOTIFICATION, set(state == Idle)])
+[ERROR] UnImpl action 0
+-------------
+Rule Violation: 
+Rule: ck_bf(state == OpenConfirm && event == Event_0, [sends the NOTIFICATION, set(state == Idle)])
+[ERROR] UnImpl action 0
+-------------
+Rule Violation: 
+Rule: ck_bf(state == Established && event == Event_0, [sends the NOTIFICATION, set(state == Idle)])
+[ERROR] UnImpl action 0
+-------------
+Inconsistency bugs: 3

@@ -1,0 +1,144 @@
+{
+    "Struct_list": [
+        {
+            "struct_name": "Message Header",
+            "value": [
+                128,
+                16,
+                8
+            ],
+            "fieldname": [
+                "Marker",
+                "Length",
+                "Type"
+            ]
+        },
+        {
+            "struct_name": "OPEN Message",
+            "value": [
+                8,
+                16,
+                16,
+                32,
+                8,
+                0
+            ],
+            "fieldname": [
+                "Version",
+                "Autonomous System",
+                "Hold Time",
+                "BGP Identifier",
+                "Opt Parm Len",
+                "Optional Parameters"
+            ]
+        },
+        {
+            "struct_name": "UPDATE Message",
+            "value": [
+                16,
+                0,
+                16,
+                0,
+                0
+            ],
+            "fieldname": [
+                "Withdrawn Routes Length",
+                "Withdrawn Routes",
+                "Total Path Attribute Length",
+                "Path Attributes",
+                "Network Layer Reachability Information"
+            ]
+        },
+        {
+            "struct_name": "NOTIFICATION Message",
+            "value": [
+                8,
+                8,
+                0
+            ],
+            "fieldname": [
+                "Error code",
+                "Error subcode",
+                "Data"
+            ]
+        }
+    ],
+    "Value_list": {
+        "Type": {
+            "OPEN": "1",
+            "UPDATE": "2",
+            "NOTIFICATION": "3",
+            "KEEPALIVE": "4"
+        },
+        "ORIGIN": {
+            "IGP - Network Layer Reachability Information": "0",
+            "EGP - Network Layer Reachability Information": "1",
+            "INCOMPLETE - Network Layer Reachability": "2"
+        },
+        "AS_PATH": {
+            "AS_SET: unordered set of ASes a route in the": "1",
+            "AS_SEQUENCE: ordered set of ASes a route in": "2"
+        },
+        "Error code": {
+            "Message Header Error": "1",
+            "OPEN Message Error": "2",
+            "UPDATE Message Error": "3",
+            "Hold Timer Expired": "4",
+            "Finite State Machine Error": "5",
+            "Cease": "6"
+        },
+        "Message Header Error": {
+            "Connection Not Synchronized": "1",
+            "Bad Message Length": "2",
+            "Bad Message Type": "3"
+        },
+        "OPEN Message Error": {
+            "Unsupported Version Number": "1",
+            "Bad Peer AS": "2",
+            "Bad BGP Identifier": "3",
+            "Unsupported Optional Parameter": "4",
+            "Unacceptable Hold Time": "6"
+        },
+        "UPDATE Message Error": {
+            "Malformed Attribute List": "1",
+            "Unrecognized Well-known Attribute": "2",
+            "Missing Well-known Attribute": "3",
+            "Attribute Flags Error": "4",
+            "Attribute Length Error": "5",
+            "Invalid ORIGIN Attribute": "6",
+            "Invalid NEXT_HOP Attribute": "8",
+            "Optional Attribute Error": "9",
+            "Invalid Network Field": "10",
+            "Malformed AS_PATH": "11"
+        },
+        "event": {
+            "1": "ManualStart",
+            "2": "ManualStop",
+            "9": "ConnectRetryTimer_Expires",
+            "10": "HoldTimer_Expires",
+            "11": "KeepaliveTimer_Expires",
+            "16": "Tcp_CR_Acked",
+            "17": "TcpConnectionConfirmed",
+            "18": "TcpConnectionFails",
+            "19": "BGPOpen",
+            "21": "BGPHeaderErr",
+            "22": "BGPOpenMsgErr",
+            "24": "NotifMsgVerErr",
+            "25": "NotifMsg",
+            "26": "KeepAliveMsg",
+            "27": "UpdateMsg",
+            "28": "UpdateMsgErr"
+        },
+        "state": [
+            "Idle",
+            "Connect",
+            "Active",
+            "OpenSent",
+            "OpenConfirm",
+            "Established"
+        ],
+        "action": [
+            "Error_Handling"
+        ]
+    }
+}

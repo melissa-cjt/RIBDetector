@@ -1,0 +1,56 @@
+{
+    "filename": "doc/rfc4271.txt",
+    "page": "RFC 4271                         BGP-4                      January 2006",
+    "key_words":["maximum message"],
+    "packet_format": {
+        "packet_pos": 1,  
+        "file":{
+            "rule":"tmp/pktrule_rfc4271.txt",
+            "meta":"tmp/pktmeta_rfc4271.txt"
+        },
+        "section_start": "4.  Message Formats",
+        "section_end": "5.  Path Attributes",
+        "pkt_ftype": 1, 
+        "format":{
+           "rfield":":",
+           "iswrap": 1
+        },
+        "noused_figure":[]
+    },
+    "FSM":{
+        "section_start": "8.1.2.  Administrative Events",
+        "section_end": "9.  UPDATE Message Handling",
+        "file":{
+            "rule":"tmp/fsmrule_rfc4271.txt"
+        },
+        "meta_regx":{
+            "state":"   (.*) State:",
+            "event":"      Event (.*): (.*)",
+            "Mandatory": "Status:     Optional"
+            
+        },
+        "fsm_regx":{
+            "src_state":"   (.*) State:",
+            "event":{
+                "Single": "Event (\\d+)", 
+                "Multi":"\\(Events (.+?)\\)"
+            },
+            "dest_state":{
+                "Unchange":["stays in the (.*) state","remains in the (.*) state", "is ignored","ignored in","be ignored"],
+                "Change":["changes its state to (.*)\\."]
+            },
+            "action": {"sends the NOTIFICATION":"Error_Handling"}
+        }
+        
+    },
+    "Error_Handling":{
+        "file":{
+            "rule":"tmp/errrule_rfc4271.txt"
+        },
+        "section_start": "6.1.  Message Header Error Handling",
+        "section_end": "6.4.  NOTIFICATION Message Error Handling",
+        "Error_code_meta":{
+            "error_code":["Error code"],
+            "error_subcode":["Message Header Error","OPEN Message Error","UPDATE Message Error"]}
+    }
+}

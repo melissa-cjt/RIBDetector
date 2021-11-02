@@ -1,0 +1,70 @@
+{
+    "Rule": [
+        {
+            "Op": {
+                "SET": [
+                    3,
+                    2
+                ]
+            },
+            "Cond": [
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 33,
+                            "rhs": "recognized "
+                        }
+                    ],
+                    "connect": [],
+                    "type": 1,
+                    "keyword": "Path_Attributes"
+                }
+            ]
+        },
+        {
+            "Op": {
+                "SET": [
+                    3,
+                    5
+                ]
+            },
+            "Cond": [
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 32,
+                            "rhs": "with the expected length ( based on the attribute type code ) "
+                        }
+                    ],
+                    "connect": [],
+                    "type": 1,
+                    "keyword": "Attribute_Length"
+                }
+            ]
+        },
+        {
+            "Op": {
+                "SET": [
+                    3,
+                    10
+                ]
+            },
+            "Cond": [
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 32,
+                            "rhs": "checked for syntactic validity ."
+                        }
+                    ],
+                    "connect": [],
+                    "type": 1,
+                    "keyword": "Network_Layer_Reachability_Information"
+                }
+            ]
+        }
+    ]
+}

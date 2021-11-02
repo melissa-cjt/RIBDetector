@@ -1,0 +1,580 @@
+[
+    {
+        "trigger": "1",
+        "source": "Idle",
+        "dest": "Connect",
+        "action": []
+    },
+    {
+        "trigger": "2",
+        "source": "Idle",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "9",
+        "source": "Connect",
+        "dest": "Connect",
+        "action": []
+    },
+    {
+        "trigger": "10",
+        "source": "Connect",
+        "dest": "Connect",
+        "action": []
+    },
+    {
+        "trigger": "11",
+        "source": "Connect",
+        "dest": "Connect",
+        "action": []
+    },
+    {
+        "trigger": "16",
+        "source": "Connect",
+        "dest": "Connect",
+        "action": []
+    },
+    {
+        "trigger": "17",
+        "source": "Connect",
+        "dest": "Connect",
+        "action": []
+    },
+    {
+        "trigger": "18",
+        "source": "Connect",
+        "dest": "Connect",
+        "action": []
+    },
+    {
+        "trigger": "19",
+        "source": "Connect",
+        "dest": "Connect",
+        "action": []
+    },
+    {
+        "trigger": "21",
+        "source": "Connect",
+        "dest": "Connect",
+        "action": []
+    },
+    {
+        "trigger": "22",
+        "source": "Connect",
+        "dest": "Connect",
+        "action": []
+    },
+    {
+        "trigger": "24",
+        "source": "Connect",
+        "dest": "Connect",
+        "action": []
+    },
+    {
+        "trigger": "25",
+        "source": "Connect",
+        "dest": "Connect",
+        "action": []
+    },
+    {
+        "trigger": "26",
+        "source": "Connect",
+        "dest": "Connect",
+        "action": []
+    },
+    {
+        "trigger": "27",
+        "source": "Connect",
+        "dest": "Connect",
+        "action": []
+    },
+    {
+        "trigger": "28",
+        "source": "Connect",
+        "dest": "Connect",
+        "action": []
+    },
+    {
+        "trigger": "1",
+        "source": "Connect",
+        "dest": "Connect",
+        "action": []
+    },
+    {
+        "trigger": "2",
+        "source": "Connect",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "9",
+        "source": "Connect",
+        "dest": "Connect",
+        "action": []
+    },
+    {
+        "trigger": "16",
+        "source": "Connect",
+        "dest": "Connect",
+        "action": []
+    },
+    {
+        "trigger": "17",
+        "source": "Connect",
+        "dest": "Connect",
+        "action": []
+    },
+    {
+        "trigger": "16",
+        "source": "Connect",
+        "dest": "OpenSent",
+        "action": []
+    },
+    {
+        "trigger": "17",
+        "source": "Connect",
+        "dest": "OpenSent",
+        "action": []
+    },
+    {
+        "trigger": "18",
+        "source": "Connect",
+        "dest": "Active",
+        "action": []
+    },
+    {
+        "trigger": "21",
+        "source": "Connect",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "22",
+        "source": "Connect",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "24",
+        "source": "Connect",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "10",
+        "source": "Connect",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "11",
+        "source": "Connect",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "25",
+        "source": "Connect",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "26",
+        "source": "Connect",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "27",
+        "source": "Connect",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "28",
+        "source": "Connect",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "1",
+        "source": "Active",
+        "dest": "Active",
+        "action": []
+    },
+    {
+        "trigger": "2",
+        "source": "Active",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "9",
+        "source": "Active",
+        "dest": "Connect",
+        "action": []
+    },
+    {
+        "trigger": "16",
+        "source": "Active",
+        "dest": "Active",
+        "action": []
+    },
+    {
+        "trigger": "17",
+        "source": "Active",
+        "dest": "Active",
+        "action": []
+    },
+    {
+        "trigger": "16",
+        "source": "Active",
+        "dest": "OpenSent",
+        "action": []
+    },
+    {
+        "trigger": "17",
+        "source": "Active",
+        "dest": "OpenSent",
+        "action": []
+    },
+    {
+        "trigger": "18",
+        "source": "Active",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "21",
+        "source": "Active",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "22",
+        "source": "Active",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "24",
+        "source": "Active",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "10",
+        "source": "Active",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "11",
+        "source": "Active",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "25",
+        "source": "Active",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "26",
+        "source": "Active",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "27",
+        "source": "Active",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "28",
+        "source": "Active",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "1",
+        "source": "OpenSent",
+        "dest": "OpenSent",
+        "action": []
+    },
+    {
+        "trigger": "2",
+        "source": "OpenSent",
+        "dest": "Idle",
+        "action": [
+            "sends the NOTIFICATION"
+        ]
+    },
+    {
+        "trigger": "10",
+        "source": "OpenSent",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "18",
+        "source": "OpenSent",
+        "dest": "Active",
+        "action": []
+    },
+    {
+        "trigger": "19",
+        "source": "OpenSent",
+        "dest": "OpenConfirm",
+        "action": []
+    },
+    {
+        "trigger": "21",
+        "source": "OpenSent",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "22",
+        "source": "OpenSent",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "24",
+        "source": "OpenSent",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "9",
+        "source": "OpenSent",
+        "dest": "Idle",
+        "action": [
+            "sends the NOTIFICATION"
+        ]
+    },
+    {
+        "trigger": "11",
+        "source": "OpenSent",
+        "dest": "Idle",
+        "action": [
+            "sends the NOTIFICATION"
+        ]
+    },
+    {
+        "trigger": "25",
+        "source": "OpenSent",
+        "dest": "Idle",
+        "action": [
+            "sends the NOTIFICATION"
+        ]
+    },
+    {
+        "trigger": "26",
+        "source": "OpenSent",
+        "dest": "Idle",
+        "action": [
+            "sends the NOTIFICATION"
+        ]
+    },
+    {
+        "trigger": "27",
+        "source": "OpenSent",
+        "dest": "Idle",
+        "action": [
+            "sends the NOTIFICATION"
+        ]
+    },
+    {
+        "trigger": "28",
+        "source": "OpenSent",
+        "dest": "Idle",
+        "action": [
+            "sends the NOTIFICATION"
+        ]
+    },
+    {
+        "trigger": "1",
+        "source": "OpenConfirm",
+        "dest": "OpenConfirm",
+        "action": []
+    },
+    {
+        "trigger": "1",
+        "source": "OpenConfirm",
+        "dest": "OpenConfirm",
+        "action": []
+    },
+    {
+        "trigger": "2",
+        "source": "OpenConfirm",
+        "dest": "Idle",
+        "action": [
+            "sends the NOTIFICATION"
+        ]
+    },
+    {
+        "trigger": "10",
+        "source": "OpenConfirm",
+        "dest": "Idle",
+        "action": [
+            "sends the NOTIFICATION"
+        ]
+    },
+    {
+        "trigger": "11",
+        "source": "OpenConfirm",
+        "dest": "OpenConfirm",
+        "action": []
+    },
+    {
+        "trigger": "18",
+        "source": "OpenConfirm",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "25",
+        "source": "OpenConfirm",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "24",
+        "source": "OpenConfirm",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "19",
+        "source": "OpenConfirm",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "21",
+        "source": "OpenConfirm",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "22",
+        "source": "OpenConfirm",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "26",
+        "source": "OpenConfirm",
+        "dest": "Established",
+        "action": []
+    },
+    {
+        "trigger": "9",
+        "source": "OpenConfirm",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "27",
+        "source": "OpenConfirm",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "28",
+        "source": "OpenConfirm",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "1",
+        "source": "Established",
+        "dest": "Established",
+        "action": []
+    },
+    {
+        "trigger": "1",
+        "source": "Established",
+        "dest": "Established",
+        "action": []
+    },
+    {
+        "trigger": "2",
+        "source": "Established",
+        "dest": "Idle",
+        "action": [
+            "sends the NOTIFICATION"
+        ]
+    },
+    {
+        "trigger": "10",
+        "source": "Established",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "11",
+        "source": "Established",
+        "dest": "Established",
+        "action": []
+    },
+    {
+        "trigger": "24",
+        "source": "Established",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "25",
+        "source": "Established",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "18",
+        "source": "Established",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "26",
+        "source": "Established",
+        "dest": "Established",
+        "action": []
+    },
+    {
+        "trigger": "27",
+        "source": "Established",
+        "dest": "Established",
+        "action": []
+    },
+    {
+        "trigger": "28",
+        "source": "Established",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "9",
+        "source": "Established",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "21",
+        "source": "Established",
+        "dest": "Idle",
+        "action": []
+    },
+    {
+        "trigger": "22",
+        "source": "Established",
+        "dest": "Idle",
+        "action": []
+    }
+]

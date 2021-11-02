@@ -1,0 +1,438 @@
+{
+    "Rule": [
+        {
+            "Op": {
+                "SET": [
+                    1,
+                    2
+                ]
+            },
+            "Cond": [
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 36,
+                            "rhs": "19"
+                        },
+                        {
+                            "lhs": "x",
+                            "predicate": 34,
+                            "rhs": "4096"
+                        }
+                    ],
+                    "connect": [
+                        2
+                    ],
+                    "type": 3,
+                    "keyword": "Length"
+                },
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 36,
+                            "rhs": "29"
+                        }
+                    ],
+                    "connect": [],
+                    "type": 1,
+                    "keyword": "Length"
+                },
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 36,
+                            "rhs": "23"
+                        }
+                    ],
+                    "connect": [],
+                    "type": 1,
+                    "keyword": "Length"
+                },
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 33,
+                            "rhs": "19"
+                        }
+                    ],
+                    "connect": [],
+                    "type": 1,
+                    "keyword": "Length"
+                },
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 36,
+                            "rhs": "21"
+                        }
+                    ],
+                    "connect": [],
+                    "type": 1,
+                    "keyword": "Length"
+                }
+            ]
+        },
+        {
+            "Op": {
+                "SET": [
+                    1,
+                    3
+                ]
+            },
+            "Cond": [
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 32,
+                            "rhs": "1"
+                        },
+                        {
+                            "lhs": "x",
+                            "predicate": 32,
+                            "rhs": "2"
+                        },
+                        {
+                            "lhs": "x",
+                            "predicate": 32,
+                            "rhs": "3"
+                        },
+                        {
+                            "lhs": "x",
+                            "predicate": 32,
+                            "rhs": "4"
+                        }
+                    ],
+                    "connect": [
+                        1,
+                        1,
+                        1,
+                        1
+                    ],
+                    "type": 3,
+                    "keyword": "Type"
+                }
+            ]
+        },
+
+        {
+            "Op": {
+                "SET": [
+                    2,
+                    3
+                ]
+            },
+            "Cond": [
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 32,
+                            "rhs": "0 "
+                        },
+                        {
+                            "lhs":"x",
+                            "predicate": 32,
+                            "rhs":"y"
+                        }
+                    ],
+                    "connect": [2],
+                    "type": 3,
+                    "keyword": "id"
+                }
+            ]
+        },
+        {
+            "Op": {
+                "SET": [
+                    2,
+                    4
+                ]
+            },
+            "Cond": [
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 33,
+                            "rhs": "2 "
+                        }
+                    ],
+                    "connect": [],
+                    "type": 1,
+                    "keyword": "Optional_Parameters"
+                }
+            ]
+        },
+        {
+            "Op": {
+                "SET": [
+                    2,
+                    6
+                ]
+            },
+            "Cond": [
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 34,
+                            "rhs": "0"
+                        },
+                        {
+                            "lhs": "x",
+                            "predicate": 36,
+                            "rhs": "3"
+                        }
+                    ],
+                    "connect": [
+                        1
+                    ],
+                    "type": 3,
+                    "keyword": "Hold_Time"
+                }
+            ]
+        },
+        {
+            "Op": {
+                "SET": [
+                    3,
+                    2
+                ]
+            },
+            "Cond": [
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 33,
+                            "rhs": "1"
+                        },
+                        {
+                            "lhs": "x",
+                            "predicate": 33,
+                            "rhs": "2"
+                        },
+                        {
+                            "lhs": "x",
+                            "predicate": 33,
+                            "rhs": "3"
+                        },
+                        {
+                            "lhs": "x",
+                            "predicate": 33,
+                            "rhs": "4"
+                        },
+                        {
+                            "lhs": "x",
+                            "predicate": 33,
+                            "rhs": "5"
+                        },
+                        {
+                            "lhs": "x",
+                            "predicate": 33,
+                            "rhs": "6"
+                        },
+                        {
+                            "lhs": "x",
+                            "predicate": 33,
+                            "rhs": "7"
+                        }
+        
+                    ],
+                    "keyword":"type",
+                    "connect":[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                    "type": 3
+                }
+            ]
+        },
+        {
+            "Op": {
+                "SET": [
+                    3,
+                    5
+                ]
+            },
+            "Cond":[
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 33,
+                            "rhs": "1"
+                        }
+                    ],
+                    "keyword":"origrin_length",
+                    "type": 1
+                },
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 33,
+                            "rhs": "4"
+                        }
+                    ],
+                    "keyword":"nexthop_length",
+                    "type": 1
+                },
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 33,
+                            "rhs": "4"
+                        }
+                    ],
+                    "keyword":"med_length",
+                    "type": 1
+                },
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 33,
+                            "rhs": "4"
+                        }
+                    ],
+                    "keyword":"local_pref_length",
+                    "type": 1
+                },
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 33,
+                            "rhs": "0"
+                        }
+                    ],
+                    "keyword":"atomic_length",
+                    "type": 1
+                },
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 33,
+                            "rhs": "6"
+                        }
+                    ],
+                    "keyword":"aggregator_length",
+                    "type": 1
+                },
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 33,
+                            "rhs": "4"
+                        }
+                    ],
+                    "keyword":"aspath_length",
+                    "type": 1
+                }
+                ]
+        },
+        {
+            "Op": {
+                "SET": [
+                    3,
+                    6
+                ]
+            },
+            "Cond": [
+                {
+                    "rfc_cond": [
+  
+                        {
+                            "lhs": "x",
+                            "predicate": 34,
+                            "rhs": "2"
+                        }
+                    ],
+                    "connect": [],
+                    "type": 1,
+                    "keyword": "ORIGIN"
+                }
+            ]
+        },
+        {
+            "Op":{
+                "SET":[3, 8]
+            },
+            "Cond":[{
+                "rfc_cond": [
+                    {
+                        "lhs": "x",
+                        "predicate": 32,
+                        "rhs": "0"
+                    }
+                ],
+                "keyword":"nexthop",
+                "connect":[],
+                "type": 1 
+
+            }
+                
+            ]
+        },
+        {
+            "Op": {
+                "SET": [
+                    3,
+                    10
+                ]
+            },
+            "Cond": [
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 32,
+                            "rhs": "24"
+                        }
+                    ],
+                    "connect": [],
+                    "type": 1,
+                    "keyword": "prefixlen"
+                }
+            ]
+        },{
+            "Op": {
+                "SET": [
+                    3,
+                    11
+                ]
+            },
+            "Cond": [
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 32,
+                            "rhs": "0"
+                        }
+                    ],
+                    "keyword":"aspath",
+                    "type": 1
+                },
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 32,
+                            "rhs": "0"
+                        }
+                    ],
+                    "keyword":"as4_path",
+                    "type": 1
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,264 @@
+{
+    "Rules": [
+        {
+            "OP": {
+                "USE": "Message Format"
+            },
+            "Cond": [
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 32,
+                            "rhs": "4096"
+                        }
+                    ],
+                    "connect": [],
+                    "type": 1,
+                    "keyword": "maximum_message"
+                }
+            ]
+        },
+        {
+            "OP": {
+                "USE": "Marker"
+            },
+            "Structure": {
+                "struct_name": "Message Header",
+                "field": "Marker"
+            },
+            "Cond": [
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 32,
+                            "rhs": "0xffffffffffffffffff"
+                        }
+                    ],
+                    "connect": [],
+                    "type": 1,
+                    "keyword": "marker"
+                }
+            ]
+        },
+        {
+            "OP": {
+                "USE": "Length"
+            },
+            "Structure": {
+                "struct_name": "Message Header",
+                "field": "Length"
+            },
+            "Cond": [
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 35,
+                            "rhs": "19"
+                        },
+                        {
+                            "lhs": "x",
+                            "predicate": 37,
+                            "rhs": "4096 "
+                        }
+                    ],
+                    "connect": [
+                        1
+                    ],
+                    "type": 3,
+                    "keyword": "length"
+                }
+            ]
+        },
+        {
+            "OP": {
+                "USE": "Type"
+            },
+            "Structure": {
+                "struct_name": "Message Header",
+                "field": "Type"
+            }
+        },
+        {
+            "OP": {
+                "USE": "OPEN Message"
+            },
+            "Cond": [
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 35,
+                            "rhs": "29"
+                        }
+                    ],
+                    "connect": [],
+                    "type": 1,
+                    "keyword": "length"
+                }
+            ]
+        },
+        {
+            "OP": {
+                "USE": "Version"
+            },
+            "Structure": {
+                "struct_name": "OPEN Message",
+                "field": "Version"
+            },
+            "Cond": [
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 32,
+                            "rhs": "4"
+                        }
+                    ],
+                    "connect": [],
+                    "type": 1,
+                    "keyword": "version"
+                }
+            ]
+        },
+        {
+            "OP": {
+                "USE": "Hold Time"
+            },
+            "Structure": {
+                "struct_name": "OPEN Message",
+                "field": "Hold Time"
+            },
+            "Cond": [
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 32,
+                            "rhs": "0"
+                        },
+                        {
+                            "lhs": "x",
+                            "predicate": 35,
+                            "rhs": "3"
+                        }
+                    ],
+                    "connect": [
+                        2
+                    ],
+                    "type": 3,
+                    "keyword": "Hold_Time"
+                }
+            ]
+        },
+        {
+            "OP": {
+                "USE": "Opt Parm Len"
+            },
+            "Structure": {
+                "struct_name": "OPEN Message",
+                "field": "Opt Parm Len"
+            },
+            "Cond": [
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 32,
+                            "rhs": "0"
+                        }
+                    ],
+                    "connect": [],
+                    "type": 1,
+                    "keyword": "Opt_Parm_Len"
+                }
+            ]
+        },
+        {
+            "OP": {
+                "USE": "UPDATE Message"
+            },
+            "Cond": [
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 35,
+                            "rhs": "23"
+                        }
+                    ],
+                    "connect": [],
+                    "type": 1,
+                    "keyword": "update"
+                }
+            ]
+        },
+        {
+            "OP": {
+                "USE": "KEEPALIVE Message"
+            },
+            "Cond": [
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 32,
+                            "rhs": "0"
+                        }
+                    ],
+                    "connect": [],
+                    "type": 1,
+                    "keyword": "Hold_Time"
+                }
+            ]
+        },
+        {
+            "OP": {
+                "USE": "NOTIFICATION Message"
+            },
+            "Cond": [
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 35,
+                            "rhs": "21"
+                        }
+                    ],
+                    "connect": [],
+                    "type": 1,
+                    "keyword": "length"
+                }
+            ]
+        },
+        {
+            "OP": {
+                "USE": "Error code"
+            },
+            "Structure": {
+                "struct_name": "NOTIFICATION Message",
+                "field": "Error code"
+            }
+        },
+        {
+            "OP": {
+                "USE": "OPEN Message Error"
+            },
+            "Structure": {
+                "struct_name": "NOTIFICATION Message",
+                "field": "OPEN Message Error"
+            }
+        },
+        {
+            "OP": {
+                "USE": "UPDATE Message Error"
+            },
+            "Structure": {
+                "struct_name": "NOTIFICATION Message",
+                "field": "UPDATE Message Error"
+            }
+        }
+    ]
+}
