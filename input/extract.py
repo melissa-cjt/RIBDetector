@@ -10,7 +10,6 @@ import time
 
 if __name__ == '__main__':
 
-    # time_start = time.time()
     rfc_cfg_fname = sys.argv[1]
     '''
     pakcet meta-info and rule extraction
