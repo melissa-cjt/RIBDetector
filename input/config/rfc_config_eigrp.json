@@ -1,0 +1,21 @@
+{
+    "filename": "doc/rfc7868.txt",
+    "page": "RFC 7868                      Cisco's EIGRP                     May 2016",
+    "key_words":["AS number"],
+    "packet_format": {
+        "packet_pos": 1,  
+        "file":{
+            "rule":"tmp/pktrule_rfc7868.txt",
+            "meta":"tmp/pktmeta_rfc7868.txt"
+        },
+
+        "section_start": "6.5.  EIGRP Packet Header",
+        "section_end": "6.8.6.  IPv6-Specific TLVs",
+        "pkt_ftype": 1, 
+        "format":{
+           "rfield":":",
+           "iswrap": 0
+        },
+        "noused_figure":[]
+    }
+}
