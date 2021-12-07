@@ -3,7 +3,7 @@
     "page": "RFC 7868                      Cisco's EIGRP                     May 2016",
     "key_words":["AS number"],
     "packet_format": {
-        "packet_pos": 1,  
+        "pkt_fmt_is_graph": 1,  
         "file":{
             "rule":"tmp/pktrule_rfc7868.txt",
             "meta":"tmp/pktmeta_rfc7868.txt"
