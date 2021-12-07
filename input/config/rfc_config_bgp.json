@@ -3,7 +3,7 @@
     "page": "RFC 4271                         BGP-4                      January 2006",
     "key_words":["maximum message"],
     "packet_format": {
-        "packet_pos": 1,  
+        "pkt_fmt_is_graph": 1,  
         "file":{
             "rule":"tmp/pktrule_rfc4271.txt",
             "meta":"tmp/pktmeta_rfc4271.txt"
