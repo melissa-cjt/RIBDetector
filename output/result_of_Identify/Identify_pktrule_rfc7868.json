@@ -1,0 +1,48 @@
+{
+   "structure" : [
+      {
+         "impl" : [ "struct.TLV_Parameter_Type" ],
+         "rfc" : "0x0001 - PARAMETER_TYPE"
+      },
+      {
+         "impl" : [ "struct.TLV_Software_Type" ],
+         "rfc" : "0x0002 - AUTHENTICATION_TYPE"
+      },
+      {
+         "impl" : [ "struct.TLV_Software_Type" ],
+         "rfc" : "0x0004 - SOFTWARE_VERSION_TYPE"
+      },
+      {
+         "impl" : [ "struct.TLV_Sequence_Type", "struct.eigrp_tlv_hdr_type" ],
+         "rfc" : "0x0007 - PEER_ TERMINATION_TYPE"
+      },
+      {
+         "impl" : [ "struct.TLV_Sequence_Type", "struct.eigrp_tlv_hdr_type" ],
+         "rfc" : "0x0008 - TID_LIST_TYPE"
+      },
+      {
+         "impl" : [ "struct.eigrp_metrics" ],
+         "rfc" : "Classic Metric Encoding"
+      },
+      {
+         "impl" : [ "struct.eigrp_header" ],
+         "rfc" : "EIGRP Packet Header"
+      },
+      {
+         "impl" : [ "struct.TLV_Sequence_Type", "struct.eigrp_tlv_hdr_type" ],
+         "rfc" : "EIGRP TLV Encoding Format"
+      },
+      {
+         "impl" : [ "struct.TLV_IPv4_External_type" ],
+         "rfc" : "IPv4 EXTERNAL_TYPE_EXPAND"
+      },
+      {
+         "impl" : [ "struct.TLV_IPv4_Internal_type" ],
+         "rfc" : "IPv4 INTERNAL_TYPE"
+      },
+      {
+         "impl" : [ "struct.TLV_IPv4_Internal_type" ],
+         "rfc" : "IPv4 INTERNAL_TYPE_EXPAND"
+      }
+   ]
+}
