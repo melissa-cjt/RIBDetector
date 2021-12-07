@@ -11,7 +11,7 @@
 
         "section_start": "6.5.  EIGRP Packet Header",
         "section_end": "6.8.6.  IPv6-Specific TLVs",
-        "pkt_ftype": 1, 
+        "pkt_field_in_para": 1, 
         "format":{
            "rfield":":",
            "iswrap": 0
