@@ -1,0 +1,56 @@
+{
+    "Struct_list": [
+        {
+            "struct_name": "EIGRP TLV Encoding Format",
+            "value": [
+                16,
+                16,
+                0
+            ],
+            "fieldname": [
+                "Type high-low",
+                "Length",
+                "Value"
+            ]
+        },
+
+        {
+            "struct_name": "IPv4 INTERNAL_TYPE",
+            "value": [
+                16,
+                16,
+                32,
+                32,
+                0
+            ],
+            "fieldname": [
+                "0x01-0x02",
+                "Length",
+                "Next-Hop Forwarding Address",
+                "Vector Metric Section",
+                "Destination Section IPv4 Address"
+            ]
+        },
+        {
+            "struct_name": "IPv4 EXTERNAL_TYPE",
+            "value": [
+                16,
+                16,
+                32,
+                32,
+                32,
+                0
+            ],
+            "fieldname": [
+                "0x01-0x03",
+                "Length",
+                "Next-Hop Forwarding Address",
+                "Exterior Section",
+                "Vector Metric Section",
+                "Destination Section IPv4 Address"
+            ]
+        }
+
+    ]
+  
+}

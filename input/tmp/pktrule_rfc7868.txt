@@ -1,0 +1,497 @@
+6.5.  EIGRP Packet Header
+
+   The basic EIGRP packet payload format is identical for both IPv4 and
+   IPv6, although there are some protocol-specific variations.  Packets
+   consist of a header, followed by a set of variable-length fields
+   consisting of Type/Length/Value (TLV) triplets.
+
+
+   Header Version: EIGRP Packet Header Format version.  Header Version
+      is 2.  This field is not the same as the TLV Version field.
+
+   Opcode: Indicates the type of the message.  It will be one of the
+      following values:
+
+           EIGRP_OPC_UPDATE              1
+           EIGRP_OPC_REQUEST             2
+           EIGRP_OPC_QUERY               3
+           EIGRP_OPC_REPLY               4
+           EIGRP_OPC_HELLO               5
+           Reserved                      6      (EIGRP_OPC_IPXSAP)
+           Reserved                      7      (EIGRP_OPC_PROBE)
+           Reserved                      8      (EIGRP_OPC_ACK)
+           Reserved                      9
+           EIGRP_OPC_SIAQUERY           10
+           EIGRP_OPC_SIAREPLY           11
+
+   Checksum: Each packet will include a checksum for the entire contents
+      of the packet.  The checksum will be the standard ones' complement
+      of the ones' complement sum.  For purposes of computing the
+      checksum, the value of the checksum field is zero.  The packet is
+      discarded if the packet checksum fails.
+
+   Flags: Defines special handling of the packet.  There are currently
+      four defined flag bits.
+
+   INIT-Flag (0x01): This bit is set in the initial UPDATE sent to a
+      newly discovered neighbor.  It instructs the neighbor to advertise
+      its full set of routes.
+
+   CR-Flag (0x02): This bit indicates that receivers should only accept
+      the packet if they are in Conditionally Received mode.  A router
+      enters Conditionally Received mode when it receives and processes
+      a HELLO packet with a SEQUENCE TLV present.
+
+   RS-Flag (0x04): The Restart flag is set in the HELLO and the UPDATE
+      packets during the restart period.  The router looks at the RS-
+      Flag to detect if a neighbor is restarting.  From the restarting
+      routers perspective, if a neighboring router detects the RS-Flag
+      set, it will maintain the adjacency, and will set the RS-Flag in
+      its UPDATE packet to indicated it is doing a soft restart.
+
+   EOT-Flag (0x08): The End-of-Table flag marks the end of the startup
+      process with a neighbor.  If the flag is set, it indicates the
+      neighbor has completed sending all UPDATEs.  At this point, the
+      router will remove any stale routes learned from the neighbor
+      prior to the restart event.  A stale route is any route that
+      existed before the restart and was not refreshed by the neighbor
+      via and UPDATE.
+
+   Sequence Number: Each packet that is transmitted will have a 32-bit
+      sequence number that is unique with respect to a sending router.
+      A value of 0 means that an acknowledgment is not required.
+
+   Acknowledgment Number: The 32-bit sequence number that is being
+      acknowledged with respect to the receiver of the packet.  If the
+      value is 0, there is no acknowledgment present.  A non-zero value
+      can only be present in unicast-addressed packets.  A HELLO packet
+      with a non-zero ACK field should be decoded as an ACK packet
+      rather than a HELLO packet.
+
+   Virtual Router Identifier (VRID): A 16-bit number that identifies the
+      virtual router with which this packet is associated.  Packets
+      received with an unknown, or unsupported, value will be discarded.
+
+             Value Range       Usage
+               0x0000            Unicast Address Family
+               0x0001            Multicast Address Family
+               0x0002-0x7FFF     Reserved
+               0x8000            Unicast Service Family
+               0x8001-0xFFFF     Reserved
+
+   Autonomous System Number: 16-bit unsigned number of the sending
+      system.  This field is indirectly used as an authentication value.
+      That is, a router that receives and accepts a packet from a
+      neighbor must have the same AS number or the packet is ignored.
+      The range of valid AS numbers is 1 through 65,535.
+
+6.6.  EIGRP TLV Encoding Format
+
+   The contents of each packet can contain a variable number of fields.
+   Each field will be tagged and include a length field.  This allows
+   for newer versions of software to add capabilities and coexist with
+   old versions of software in the same configuration.  Fields that are
+   tagged and not recognized can be skipped over.  Another advantage of
+   this encoding scheme is that it allows multiple network-layer
+   protocols to carry independent information.  Therefore, if it is
+   later decided to implement a single "integrated" protocol, this can
+   be done.
+
+   The format of a {type, length, value} (TLV) is encoded as follows:
+
+
+   The type values are the ones defined below.  The length value
+   specifies the length in octets of the type, length, and value fields.
+   TLVs can appear in a packet in any order, and there are no
+   interdependencies among them.
+
+   Malformed TLVs contained in EIGRP messages are handled by silently
+   discarding the containing message.  A TLV is malformed if the TLV
+   Length is invalid or if the TLV extends beyond the end of the
+   containing message.
+
+
+
+
+
+
+
+
+
+
+
+6.6.1.  Type Field Encoding
+
+   The type field is structured as follows: Type High: 1 octet that
+   defines the protocol classification:
+
+            Protocol            ID   VERSION
+            General            0x00    1.2
+            IPv4               0x01    1.2
+            IPv6               0x04    1.2
+            SAF                0x05    3.0
+            Multiprotocol      0x06    2.0
+
+   Type Low: 1 octet that defines the TLV Opcode; see TLV Definitions in
+      Section 3.
+
+6.6.2.  Length Field Encoding
+
+   The Length field is a 2-octet unsigned number, which indicates the
+   length of the TLV.  The value includes the Type and Length fields.
+
+6.6.3.  Value Field Encoding
+
+   The Value field is a multi-octet field containing the payload for the
+   TLV.
+
+6.7.  EIGRP Generic TLV Definitions
+
+                                 Ver 1.2   Ver 2.0
+   PARAMETER_TYPE                0x0001    0x0001
+   AUTHENTICATION_TYPE           0x0002    0x0002
+   SEQUENCE_TYPE                 0x0003    0x0003
+   SOFTWARE_VERSION_TYPE         0x0004    0x0004
+   MULTICAST_SEQUENCE_TYPE       0x0005    0x0005
+   PEER_INFORMATION_TYPE         0x0006    0x0006
+   PEER_TERMINATION_TYPE         0x0007    0x0007
+   PEER_TID_LIST_TYPE             ---      0x0008
+
+6.7.1.  0x0001 - PARAMETER_TYPE
+
+   This TLV is used in HELLO packets to convey the EIGRP metric
+   coefficient values: noted as "K-values" as well as the Hold Time
+   values.  This TLV is also used in an initial UPDATE packet when a
+   neighbor is discovered.
+
+
+   K-values: The K-values associated with the EIGRP composite metric
+      equation.  The default values for weights are:
+
+                K1 - 1
+                K2 - 0
+                K3 - 1
+                K4 - 0
+                K5 - 0
+                K6 - 0
+
+   Hold Time: The amount of time in seconds that a receiving router
+      should consider the sending neighbor valid.  A valid neighbor is
+      one that is able to forward packets and participates in EIGRP.  A
+      router that considers a neighbor valid will store all routing
+      information advertised by the neighbor.
+
+6.7.2.  0x0002 - AUTHENTICATION_TYPE
+
+   This TLV may be used in any EIGRP packet and conveys the
+   authentication type and data used.  Routers receiving a mismatch in
+   authentication shall discard the packet.
+
+
+
+   Authentication Type: The type of authentication used.
+
+   Authentication Length: The length, measured in octets, of the
+      individual authentication.
+
+   Authentication Data: Variable-length field reflected by "Auth
+      Length", which is dependent on the type of authentication used.
+      Multiple authentication types can be present in a single
+      AUTHENTICATION_TYPE TLV.
+
+6.7.2.1.  0x02 - MD5 Authentication Type
+
+   MD5 Authentication will use Auth Type code 0x02, and the Auth Data
+   will be the MD5 Hash value.
+
+6.7.2.2.  0x03 - SHA2 Authentication Type
+
+   SHA2-256 Authentication will use Type code 0x03, and the Auth Data
+   will be the 256-bit SHA2 [6] Hash value.
+
+6.7.3.  0x0003 - SEQUENCE_TYPE
+
+   This TLV is used for a sender to tell receivers to not accept packets
+   with the CR-Flag set.  This is used to order multicast and unicast
+   addressed packets.
+
+
+   The Address Length and Protocol Address will be repeated one or more
+   times based on the Length field.
+
+   Address Length: Number of octets for the address that follows.  For
+      IPv4, the value is 4.  For IPv6, it is 16.  For AppleTalk, the
+      value is 4; for Novell IPX, the value is 10 (both are no longer in
+      use).
+
+   Protocol Address: Neighbor address on interface in which the HELLO
+      with SEQUENCE TLV is sent.  Each address listed in the HELLO
+      packet is a neighbor that should not enter Conditionally Received
+      mode.
+
+
+6.7.4.  0x0004 - SOFTWARE_VERSION_TYPE
+
+           Field                        Length
+           Vender OS major version        1
+           Vender OS minor version        1
+           EIGRP major revision           1
+           EIGRP minor revision           1
+
+   The EIGRP TLV Version fields are used to determine TLV format
+   versions.  Routers using Version 1.2 TLVs do not understand Version
+   2.0 TLVs, therefore Version 2.0 routers must send the packet with
+   both TLV formats in a mixed network.
+
+
+6.7.5.  0x0005 - MULTICAST_SEQUENCE_TYPE
+
+   The next multicast SEQUENCE TLV.
+
+
+6.7.6.  0x0006 - PEER_INFORMATION_TYPE
+
+   This TLV is reserved, and not part of this document.
+
+
+
+
+
+
+
+
+
+
+
+
+6.7.7.  0x0007 - PEER_ TERMINATION_TYPE
+
+   This TLV is used in HELLO packets to notify the list of neighbor(s)
+   the router has reset the adjacency.  This TLV is used in HELLO
+   packets to notify the list of neighbors that the router has reset the
+   adjacency.  This is used anytime a router needs to reset an
+   adjacency, or signal an adjacency it is going down.
+
+
+   Implementation note: Older Cisco routers implement this using the
+   "Parameters TLV" with all K-values set to 255 (except K6).
+
+6.7.8.  0x0008 - TID_LIST_TYPE
+
+   List of sub-topology identifiers, including the Base Topology,
+   supported by the router.
+
+
+   If this information changes from the last state, it means either a
+   new topology was added or an existing topology was removed.  This TLV
+   is ignored until the three-way handshake has finished
+
+   When the TID list is received, it compares the list to the previous
+   list sent.  If a TID is found that does not previously exist, the TID
+   is added to the neighbor's topology list, and the existing sub-
+   topology is sent to the peer.
+
+   If a TID that was in a previous list is not found, the TID is removed
+   from the neighbor's topology list and all routes learned though that
+   neighbor for that sub-topology are removed from the topology table.
+
+
+
+
+6.8.  Classic Route Information TLV Types
+
+6.8.1.  Classic Flag Field Encoding
+
+   EIGRP transports a number of flags with in the TLVs to indicate
+   addition route state information.  These bits are defined as follows:
+
+   Flags Field
+   -----------
+   Source Withdraw (Bit 0) - Indicates if the router that is the
+   original source of the destination is withdrawing the route from the
+   network or if the destination is lost due as a result of a network
+   failure.
+
+   Candidate Default (CD) (Bit 1) - Set to indicate the destination
+   should be regarded as a candidate for the default route.  An EIGRP
+   default route is selected from all the advertised candidate default
+   routes with the smallest metric.
+
+   ACTIVE (Bit 2) - Indicates if the route is in the ACTIVE State.
+
+6.8.2.  Classic Metric Encoding
+
+   The handling of bandwidth and delay for Classic TLVs is encoded in
+   the packet "scaled" form relative to how they are represented on the
+   physical link.
+
+
+   Scaled Delay: An administrative parameter assigned statically on a
+      per-interface-type basis to represent the time it takes along an
+      unloaded path.  This is expressed in units of tens of microseconds
+      divvied by 256.  A delay of 0xFFFFFFFF indicates an unreachable
+      route.
+
+   Scaled Bandwidth: The path bandwidth measured in bits per second.  In
+      units of 2,560,000,000/kbps.
+
+   MTU: The minimum MTU size for the path to the destination.
+
+   Hop Count: The number of router traversals to the destination.
+
+   Reliability: The current error rate for the path, measured as an
+      error percentage.  A value of 255 indicates 100% reliability
+
+   Load: The load utilization of the path to the destination, measured
+      as a percentage.  A value of 255 indicates 100% load.
+
+   Internal-Tag: A tag assigned by the network administrator that is
+      untouched by EIGRP.  This allows a network administrator to filter
+      routes in other EIGRP border routers based on this value.
+
+   Flags Field: See Section 6.8.1.
+
+6.8.3.  Classic Exterior Encoding
+
+   Additional routing information so provided for destinations outside
+   of the EIGRP AS as follows:
+
+
+   Router Identifier (RID): A 32-bit number provided by the router
+      sourcing the information to uniquely identify it as the source.
+
+   External Autonomous System (AS) Number: A 32-bit number indicating
+      the external AS of which the sending router is a member.  If the
+      source protocol is EIGRP, this field will be the [VRID, AS] pair.
+      If the external protocol does not have an AS, other information
+      can be used (for example, Cisco uses process-id for OSPF).
+
+   Administrative Tag: A tag assigned by the network administrator that
+      is untouched by EIGRP.  This allows a network administrator to
+      filter routes in other EIGRP border routers based on this value.
+
+   External Protocol Metric: 32-bit value of the composite metric that
+      resides in the routing table as learned by the foreign protocol.
+      If the External Protocol is IGRP or another EIGRP routing process,
+      the value can optionally be the composite metric or 0, and the
+      metric information is stored in the metric section.
+
+   External Protocol: Contains an enumerated value defined in Section
+      6.2 to identify the routing protocol (external protocol)
+      redistributing the route.
+
+   Flags Field: See Section 6.8.1
+
+6.8.4.  Classic Destination Encoding
+
+   EIGRP carries destination in a compressed form, where the number of
+   bits significant in the variable-length address field are indicated
+   in a counter.
+
+
+   Subnet Mask Bit Count: 8-bit value used to indicate the number of
+      bits in the subnet mask.  A value of 0 indicates the default
+      network, and no address is present.
+
+   Destination Address: A variable-length field used to carry the
+      destination address.  The length is determined by the number of
+      consecutive bits in the destination address.  The formula to
+      calculate the length is address-family dependent:
+
+      IPv4: ((Bit Count - 1) / 8) + 1
+      IPv6: (Bit Count == 128) ? 16 : ((x / 8) + 1)
+
+6.8.5.  IPv4-Specific TLVs
+
+      INTERNAL_TYPE       0x0102
+      EXTERNAL_TYPE       0x0103
+      COMMUNITY_TYPE      0x0104
+
+
+
+
+
+
+6.8.5.1.  IPv4 INTERNAL_TYPE
+
+   This TLV conveys IPv4 destination and associated metric information
+   for IPv4 networks.  Routes advertised in this TLV are network
+   interfaces that EIGRP is configured on as well as networks that are
+   learned via other routers running EIGRP.
+
+
+   Next-Hop Forwarding Address: IPv4 address represented by four 8-bit
+      values (total 4 octets).  If the value is zero (0), the IPv4
+      address from the received IPv4 header is used as the next hop for
+      the route.  Otherwise, the specified IPv4 address will be used.
+
+   Vector Metric Section: The vector metrics for destinations contained
+      in this TLV.  See the description of "metric encoding" in Section
+      6.8.2.
+
+   Destination Section: The network/subnet/host destination address
+      being requested.  See the description of "destination" in Section
+      6.8.4.
+
+6.8.5.2.  IPv4 EXTERNAL_TYPE
+
+   This TLV conveys IPv4 destination and metric information for routes
+   learned by other routing protocols that EIGRP injects into the AS.
+   Available with this information is the identity of the routing
+   protocol that created the route, the external metric, the AS number,
+   an indicator if it should be marked as part of the EIGRP AS, and a
+   network-administrator tag used for route filtering at EIGRP AS
+   boundaries.
+
+
+
+
+
+
+   Next-Hop Forwarding Address: IPv4 address represented by four 8-bit
+      values (total 4 octets).  If the value is zero (0), the IPv4
+      address from the received IPv4 header is used as the next hop for
+      the route.  Otherwise, the specified IPv4 address will be used.
+
+   Exterior Section: Additional routing information provided for a
+      destination that is outside of the AS and that has been
+      redistributed into the EIGRP.  See the description of "exterior
+      encoding" in Section 6.8.3.
+
+   Vector Metric Section: Vector metrics for destinations contained in
+      this TLV.  See the description of "metric encoding" in Section
+      6.8.2.
+
+   Destination Section: The network/subnet/host destination address
+      being requested.  See the description of "destination" in Section
+      6.8.4.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+6.8.5.3.  IPv4 COMMUNITY_TYPE
+
+   This TLV is used to provide community tags for specific IPv4
+   destinations.
+
+
+   IPv4 Destination: The IPv4 address with which the community
+      information should be stored.
+
+   Community Length: A 2-octet unsigned number that indicates the length
+      of the Community List.  The length does not include the IPv4
+      Address, Reserved, or Length fields.
+
+   Community List: One or more 8-octet EIGRP communities, as defined in
+      Section 6.4.
