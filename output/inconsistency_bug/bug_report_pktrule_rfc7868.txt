@@ -1,0 +1,14 @@
+--------------------
+Rule violation:
+RFC Rule:chk_bf(0x0001 - PARAMETER_TYPE >= 96 , use( 0x0001 - PARAMETER_TYPE ))
+[ERROR] Impl Conds do not comply with RFC Conds
+===================
+RFC Rule:chk_bf(0x0004 - SOFTWARE_VERSION_TYPE >= 64 , use( 0x0004 - SOFTWARE_VERSION_TYPE ))
+[ERROR] Impl Conds do not comply with RFC Conds
+===================
+Inconsistency bug: 2
+2 expli
+Running Time: 2.481000e-03
+Running Time total: 1.717920e-01
+----------------------------------
+The result of state transistion in ../output/result_of_extractor/fsmrule-pktrule_rfc7868.json
