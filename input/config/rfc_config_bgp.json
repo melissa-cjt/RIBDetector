@@ -10,7 +10,7 @@
         },
         "section_start": "4.  Message Formats",
         "section_end": "5.  Path Attributes",
-        "pkt_ftype": 1, 
+        "pkt_field_in_para": 1, 
         "format":{
            "rfield":":",
            "iswrap": 1
