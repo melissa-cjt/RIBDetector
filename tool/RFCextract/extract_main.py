@@ -268,8 +268,8 @@ class Extract(object):
 	def packet_json_nw(self):
 
 		self.section_file = self.json_data["filename"]
-		self.pkt_ftype =self.json_data["packet_format"]["pkt_ftype"]
-		self.pkt_pos = self.json_data["packet_format"]["packet_pos"]
+		self.pkt_ftype =self.json_data["packet_format"]["pkt_field_in_para"]
+		self.pkt_pos = self.json_data["packet_format"]["pkt_fmt_is_graph"]
 
 
 		if "file" in self.json_data["packet_format"].keys():
