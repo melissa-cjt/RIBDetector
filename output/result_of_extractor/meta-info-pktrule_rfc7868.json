@@ -1,0 +1,354 @@
+{
+    "Struct_list": [
+        {
+            "struct_name": "EIGRP TLV Encoding Format",
+            "value": [
+                16,
+                16,
+                0
+            ],
+            "fieldname": [
+                "Type high-low",
+                "Length",
+                "Value"
+            ]
+        },
+        {
+            "struct_name": "IPv4 INTERNAL_TYPE",
+            "value": [
+                16,
+                16,
+                32,
+                32,
+                0
+            ],
+            "fieldname": [
+                "0x01-0x02",
+                "Length",
+                "Next-Hop Forwarding Address",
+                "Vector Metric Section",
+                "Destination Section IPv4 Address"
+            ]
+        },
+        {
+            "struct_name": "IPv4 EXTERNAL_TYPE",
+            "value": [
+                16,
+                16,
+                32,
+                32,
+                32,
+                0
+            ],
+            "fieldname": [
+                "0x01-0x03",
+                "Length",
+                "Next-Hop Forwarding Address",
+                "Exterior Section",
+                "Vector Metric Section",
+                "Destination Section IPv4 Address"
+            ]
+        },
+        {
+            "struct_name": "EIGRP Packet Header",
+            "value": [
+                8,
+                8,
+                16,
+                32,
+                32,
+                32,
+                16,
+                16
+            ],
+            "fieldname": [
+                "Header Version",
+                "Opcode",
+                "Checksum",
+                "Flags",
+                "Sequence Number",
+                "Acknowledgment Number",
+                "Virtual Router ID",
+                "Autonomous System Number"
+            ]
+        },
+        {
+            "struct_name": "0x0001 - PARAMETER_TYPE",
+            "value": [
+                16,
+                16,
+                8,
+                8,
+                8,
+                8,
+                8,
+                8,
+                16
+            ],
+            "fieldname": [
+                "0x0001",
+                "0x000C",
+                "K1",
+                "K2",
+                "K3",
+                "K4",
+                "K5",
+                "K6",
+                "Hold Time"
+            ]
+        },
+        {
+            "struct_name": "0x0002 - AUTHENTICATION_TYPE",
+            "value": [
+                16,
+                16,
+                8,
+                8,
+                0
+            ],
+            "fieldname": [
+                "0x0002",
+                "Length",
+                "Auth Type",
+                "Auth Length",
+                "Auth Data"
+            ]
+        },
+        {
+            "struct_name": "0x0003 - SEQUENCE_TYPE",
+            "value": [
+                16,
+                16,
+                8,
+                24
+            ],
+            "fieldname": [
+                "0x0003",
+                "Length",
+                "Address Length",
+                "Protocol Address"
+            ]
+        },
+        {
+            "struct_name": "0x0004 - SOFTWARE_VERSION_TYPE",
+            "value": [
+                16,
+                16,
+                8,
+                8,
+                8,
+                8
+            ],
+            "fieldname": [
+                "0x0004",
+                "0x000C",
+                "Vendor Major V.",
+                "Vendor Minor V.",
+                "EIGRP Major V.",
+                "EIGRP Minor V."
+            ]
+        },
+        {
+            "struct_name": "0x0005 - MULTICAST_SEQUENCE_TYPE",
+            "value": [
+                16,
+                16,
+                32
+            ],
+            "fieldname": [
+                "0x0005",
+                "0x0008",
+                "Sequence Number"
+            ]
+        },
+        {
+            "struct_name": "0x0007 - PEER_ TERMINATION_TYPE",
+            "value": [
+                16,
+                16,
+                0
+            ],
+            "fieldname": [
+                "0x0007",
+                "Length",
+                "Address List"
+            ]
+        },
+        {
+            "struct_name": "0x0008 - TID_LIST_TYPE",
+            "value": [
+                16,
+                16,
+                0
+            ],
+            "fieldname": [
+                "0x0008",
+                "Length",
+                "Topology Identification List"
+            ]
+        },
+        {
+            "struct_name": "Classic Metric Encoding",
+            "value": [
+                32,
+                32,
+                24,
+                8,
+                8,
+                8,
+                8,
+                8
+            ],
+            "fieldname": [
+                "Scaled Delay",
+                "Scaled Bandwidth",
+                "MTU",
+                "Hop Count",
+                "Reliability",
+                "Load",
+                "Internal Tag",
+                "Flags Field"
+            ]
+        },
+        {
+            "struct_name": "Classic Exterior Encoding",
+            "value": [
+                32,
+                32,
+                32,
+                32,
+                16,
+                8,
+                8
+            ],
+            "fieldname": [
+                "Router Identifier (RID)",
+                "External Autonomous System (AS) Number",
+                "Administrative Tag",
+                "External Protocol Metric",
+                "Reserved",
+                "Extern Protocol",
+                "Flags Field"
+            ]
+        },
+        {
+            "struct_name": "Classic Destination Encoding",
+            "value": [
+                8,
+                0
+            ],
+            "fieldname": [
+                "Subnet Mask",
+                "Destination Address"
+            ]
+        },
+        {
+            "struct_name": "IPv4 COMMUNITY_TYPE",
+            "value": [
+                8,
+                8,
+                16,
+                32,
+                16,
+                16,
+                0
+            ],
+            "fieldname": [
+                "0x01",
+                "0x04",
+                "Length",
+                "IPv4 Destination",
+                "Reserved",
+                "Community Length",
+                "Community List"
+            ]
+        },
+        {
+            "struct_name": "IPv4 INTERNAL_TYPE_EXPAND",
+            "value": [
+                16,
+                16,
+                32,
+                32,
+                32,
+                24,
+                8,
+                8,
+                8,
+                8,
+                8,
+                8,
+                0
+            ],
+            "fieldname": [
+                "0x01-0x02",
+                "Length",
+                "Next-Hop Forwarding Address",
+                "Vector Metric Section  8",
+                "Destination Section IPv4 Address  2"
+            ]
+        },
+        {
+            "struct_name": "IPv4 EXTERNAL_TYPE_EXPAND",
+            "value": [
+                16,
+                16,
+                32,
+                32,
+                32,
+                32,
+                32,
+                16,
+                8,
+                8,
+                32,
+                32,
+                24,
+                8,
+                8,
+                8,
+                8,
+                8,
+                8,
+                0
+            ],
+            "fieldname": [
+                "0x01-0x03",
+                "Length",
+                "Next-Hop Forwarding Address",
+                "Exterior Section  7",
+                "Vector Metric Section  8",
+                "Destination Section IPv4 Address  2"
+            ]
+        }
+    ],
+    "Value_list": {
+        "Opcode": {
+            "EIGRP_OPC_UPDATE": "1",
+            "EIGRP_OPC_REQUEST": "2",
+            "EIGRP_OPC_QUERY": "3",
+            "EIGRP_OPC_REPLY": "4",
+            "EIGRP_OPC_HELLO": "5",
+            "(EIGRP_OPC_IPXSAP)": "6",
+            "(EIGRP_OPC_PROBE)": "7",
+            "(EIGRP_OPC_ACK)": "8",
+            "Reserved": "9",
+            "EIGRP_OPC_SIAQUERY": "10",
+            "EIGRP_OPC_SIAREPLY": "11"
+        },
+        "Acknowledgment Number": {
+            "Unicast Address Family": "0000",
+            "Multicast Address Family": "0001",
+            "Reserved": "8001",
+            "Unicast Service Family": "8000"
+        },
+        "SECTION_RULES": {
+            "INTERNAL_TYPE": "0102",
+            "EXTERNAL_TYPE": "0103",
+            "COMMUNITY_TYPE": "0104"
+        },
+        "Destination Address": {
+            "Count": "1"
+        }
+    }
+}

@@ -1,0 +1,230 @@
+{
+    "Rules": [
+        {
+            "OP": {
+                "USE": "EIGRP Packet Header",
+                "Implicit": 1
+            },
+            "Structure": {
+                "structr_name": "EIGRP Packet Header"
+            },
+            "Cond": [
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 35,
+                            "rhs": 160
+                        }
+                    ],
+                    "connect": [],
+                    "type": 1,
+                    "keyword": "EIGRP Packet Header"
+                }
+            ]
+        },
+        {
+            "OP": {
+                "USE": "0x0001 - PARAMETER_TYPE",
+                "Implicit": 1
+            },
+            "Structure": {
+                "structr_name": "0x0001 - PARAMETER_TYPE"
+            },
+            "Cond": [
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 35,
+                            "rhs": 96
+                        }
+                    ],
+                    "connect": [],
+                    "type": 1,
+                    "keyword": "0x0001 - PARAMETER_TYPE"
+                }
+            ]
+        },
+        {
+            "OP": {
+                "USE": "0x0003 - SEQUENCE_TYPE",
+                "Implicit": 1
+            },
+            "Structure": {
+                "structr_name": "0x0003 - SEQUENCE_TYPE"
+            },
+            "Cond": [
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 35,
+                            "rhs": 64
+                        }
+                    ],
+                    "connect": [],
+                    "type": 1,
+                    "keyword": "0x0003 - SEQUENCE_TYPE"
+                }
+            ]
+        },
+        {
+            "OP": {
+                "USE": "0x0004 - SOFTWARE_VERSION_TYPE",
+                "Implicit": 1
+            },
+            "Structure": {
+                "structr_name": "0x0004 - SOFTWARE_VERSION_TYPE"
+            },
+            "Cond": [
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 35,
+                            "rhs": 64
+                        }
+                    ],
+                    "connect": [],
+                    "type": 1,
+                    "keyword": "0x0004 - SOFTWARE_VERSION_TYPE"
+                }
+            ]
+        },
+        {
+            "OP": {
+                "USE": "0x0005 - MULTICAST_SEQUENCE_TYPE",
+                "Implicit": 1
+            },
+            "Structure": {
+                "structr_name": "0x0005 - MULTICAST_SEQUENCE_TYPE"
+            },
+            "Cond": [
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 35,
+                            "rhs": 64
+                        }
+                    ],
+                    "connect": [],
+                    "type": 1,
+                    "keyword": "0x0005 - MULTICAST_SEQUENCE_TYPE"
+                }
+            ]
+        },
+        {
+            "OP": {
+                "USE": "Classic Metric Encoding",
+                "Implicit": 1
+            },
+            "Structure": {
+                "structr_name": "Classic Metric Encoding"
+            },
+            "Cond": [
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 35,
+                            "rhs": 128
+                        }
+                    ],
+                    "connect": [],
+                    "type": 1,
+                    "keyword": "Classic Metric Encoding"
+                }
+            ]
+        },
+        {
+            "OP": {
+                "USE": "Classic Exterior Encoding",
+                "Implicit": 1
+            },
+            "Structure": {
+                "structr_name": "Classic Exterior Encoding"
+            },
+            "Cond": [
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 35,
+                            "rhs": 160
+                        }
+                    ],
+                    "connect": [],
+                    "type": 1,
+                    "keyword": "Classic Exterior Encoding"
+                }
+            ]
+        },
+        {
+            "OP": {
+                "USE": "Header Version"
+            },
+            "Structure": {
+                "struct_name": "EIGRP Packet Header",
+                "field": "Header Version"
+            },
+            "Cond": [
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 32,
+                            "rhs": "2"
+                        }
+                    ],
+                    "connect": [],
+                    "type": 1,
+                    "keyword": "Header_Version"
+                }
+            ]
+        },
+        {
+            "OP": {
+                "USE": "Autonomous System Number"
+            },
+            "Structure": {
+                "struct_name": "EIGRP Packet Header",
+                "field": "Autonomous System Number"
+            },
+            "Cond": [
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 0,
+                            "rhs": "y"
+                        }
+                    ],
+                    "connect": [],
+                    "type": 1,
+                    "keyword": "AS_number"
+                },
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 35,
+                            "rhs": "1"
+                        },
+                        {
+                            "lhs": "x",
+                            "predicate": 37,
+                            "rhs": "65,535"
+                        }
+                    ],
+                    "connect": [
+                        1
+                    ],
+                    "type": 3,
+                    "keyword": "AS_numbers"
+                }
+            ]
+        }
+    ]
+}
