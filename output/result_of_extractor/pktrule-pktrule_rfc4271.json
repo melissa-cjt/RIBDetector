@@ -2,11 +2,11 @@
     "Rules": [
         {
             "OP": {
-                "USE": "EIGRP TLV Encoding Format",
+                "USE": "Message Header",
                 "Implicit": 1
             },
             "Structure": {
-                "structr_name": "EIGRP TLV Encoding Format"
+                "structr_name": "Message Header"
             },
             "Cond": [
                 {
@@ -14,183 +14,41 @@
                         {
                             "lhs": "x",
                             "predicate": 35,
-                            "rhs": "y"
+                            "rhs": 152
                         }
                     ],
                     "connect": [],
                     "type": 1,
-                    "keyword": "EIGRP TLV Encoding Format"
+                    "keyword": "Message Header"
                 }
             ]
         },
         {
             "OP": {
-                "USE": "EIGRP Packet Header",
-                "Implicit": 1
-            },
-            "Structure": {
-                "structr_name": "EIGRP Packet Header"
+                "USE": "Message Format"
             },
             "Cond": [
                 {
                     "rfc_cond": [
                         {
                             "lhs": "x",
-                            "predicate": 35,
-                            "rhs": 160
+                            "predicate": 32,
+                            "rhs": "4096"
                         }
                     ],
                     "connect": [],
                     "type": 1,
-                    "keyword": "EIGRP Packet Header"
+                    "keyword": "maximum_message"
                 }
             ]
         },
         {
             "OP": {
-                "USE": "0x0001 - PARAMETER_TYPE",
-                "Implicit": 1
+                "USE": "Marker"
             },
             "Structure": {
-                "structr_name": "0x0001 - PARAMETER_TYPE"
-            },
-            "Cond": [
-                {
-                    "rfc_cond": [
-                        {
-                            "lhs": "x",
-                            "predicate": 35,
-                            "rhs": 96
-                        }
-                    ],
-                    "connect": [],
-                    "type": 1,
-                    "keyword": "0x0001 - PARAMETER_TYPE"
-                }
-            ]
-        },
-        {
-            "OP": {
-                "USE": "0x0003 - SEQUENCE_TYPE",
-                "Implicit": 1
-            },
-            "Structure": {
-                "structr_name": "0x0003 - SEQUENCE_TYPE"
-            },
-            "Cond": [
-                {
-                    "rfc_cond": [
-                        {
-                            "lhs": "x",
-                            "predicate": 35,
-                            "rhs": 64
-                        }
-                    ],
-                    "connect": [],
-                    "type": 1,
-                    "keyword": "0x0003 - SEQUENCE_TYPE"
-                }
-            ]
-        },
-        {
-            "OP": {
-                "USE": "0x0004 - SOFTWARE_VERSION_TYPE",
-                "Implicit": 1
-            },
-            "Structure": {
-                "structr_name": "0x0004 - SOFTWARE_VERSION_TYPE"
-            },
-            "Cond": [
-                {
-                    "rfc_cond": [
-                        {
-                            "lhs": "x",
-                            "predicate": 35,
-                            "rhs": 64
-                        }
-                    ],
-                    "connect": [],
-                    "type": 1,
-                    "keyword": "0x0004 - SOFTWARE_VERSION_TYPE"
-                }
-            ]
-        },
-        {
-            "OP": {
-                "USE": "0x0005 - MULTICAST_SEQUENCE_TYPE",
-                "Implicit": 1
-            },
-            "Structure": {
-                "structr_name": "0x0005 - MULTICAST_SEQUENCE_TYPE"
-            },
-            "Cond": [
-                {
-                    "rfc_cond": [
-                        {
-                            "lhs": "x",
-                            "predicate": 35,
-                            "rhs": 64
-                        }
-                    ],
-                    "connect": [],
-                    "type": 1,
-                    "keyword": "0x0005 - MULTICAST_SEQUENCE_TYPE"
-                }
-            ]
-        },
-        {
-            "OP": {
-                "USE": "Classic Metric Encoding",
-                "Implicit": 1
-            },
-            "Structure": {
-                "structr_name": "Classic Metric Encoding"
-            },
-            "Cond": [
-                {
-                    "rfc_cond": [
-                        {
-                            "lhs": "x",
-                            "predicate": 35,
-                            "rhs": 128
-                        }
-                    ],
-                    "connect": [],
-                    "type": 1,
-                    "keyword": "Classic Metric Encoding"
-                }
-            ]
-        },
-        {
-            "OP": {
-                "USE": "Classic Exterior Encoding",
-                "Implicit": 1
-            },
-            "Structure": {
-                "structr_name": "Classic Exterior Encoding"
-            },
-            "Cond": [
-                {
-                    "rfc_cond": [
-                        {
-                            "lhs": "x",
-                            "predicate": 35,
-                            "rhs": 160
-                        }
-                    ],
-                    "connect": [],
-                    "type": 1,
-                    "keyword": "Classic Exterior Encoding"
-                }
-            ]
-        },
-        {
-            "OP": {
-                "USE": "Header Version"
-            },
-            "Structure": {
-                "struct_name": "EIGRP Packet Header",
-                "field": "Header Version",
+                "struct_name": "Message Header",
+                "field": "Marker",
                 "offset": 0
             },
             "Cond": [
@@ -199,23 +57,23 @@
                         {
                             "lhs": "x",
                             "predicate": 32,
-                            "rhs": "2"
+                            "rhs": "0xffffffffffffffffff"
                         }
                     ],
                     "connect": [],
                     "type": 1,
-                    "keyword": "Header_Version"
+                    "keyword": "marker"
                 }
             ]
         },
         {
             "OP": {
-                "USE": "Autonomous System Number"
+                "USE": "Length"
             },
             "Structure": {
-                "struct_name": "EIGRP Packet Header",
-                "field": "Autonomous System Number",
-                "offset": 7
+                "struct_name": "Message Header",
+                "field": "Length",
+                "offset": 1
             },
             "Cond": [
                 {
@@ -223,31 +81,174 @@
                         {
                             "lhs": "x",
                             "predicate": 35,
-                            "rhs": "y"
-                        }
-                    ],
-                    "connect": [],
-                    "type": 1,
-                    "keyword": "AS_number"
-                },
-                {
-                    "rfc_cond": [
-                        {
-                            "lhs": "x",
-                            "predicate": 35,
-                            "rhs": "1"
+                            "rhs": "19"
                         },
                         {
                             "lhs": "x",
                             "predicate": 37,
-                            "rhs": "65,535"
+                            "rhs": "4096 "
                         }
                     ],
                     "connect": [
                         1
                     ],
                     "type": 3,
-                    "keyword": "AS_numbers"
+                    "keyword": "length"
+                }
+            ]
+        },
+        {
+            "OP": {
+                "USE": "OPEN Message"
+            },
+            "Cond": [
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 35,
+                            "rhs": "29"
+                        }
+                    ],
+                    "connect": [],
+                    "type": 1,
+                    "keyword": "length"
+                }
+            ]
+        },
+        {
+            "OP": {
+                "USE": "Version"
+            },
+            "Structure": {
+                "struct_name": "OPEN Message",
+                "field": "Version",
+                "offset": 0
+            },
+            "Cond": [
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 32,
+                            "rhs": "4"
+                        }
+                    ],
+                    "connect": [],
+                    "type": 1,
+                    "keyword": "version"
+                }
+            ]
+        },
+        {
+            "OP": {
+                "USE": "Hold Time"
+            },
+            "Structure": {
+                "struct_name": "OPEN Message",
+                "field": "Hold Time",
+                "offset": 2
+            },
+            "Cond": [
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 32,
+                            "rhs": "0"
+                        },
+                        {
+                            "lhs": "x",
+                            "predicate": 35,
+                            "rhs": "3"
+                        }
+                    ],
+                    "connect": [
+                        2
+                    ],
+                    "type": 3,
+                    "keyword": "Hold_Time"
+                }
+            ]
+        },
+        {
+            "OP": {
+                "USE": "Opt Parm Len"
+            },
+            "Structure": {
+                "struct_name": "OPEN Message",
+                "field": "Opt Parm Len",
+                "offset": 4
+            },
+            "Cond": [
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 32,
+                            "rhs": "present"
+                        }
+                    ],
+                    "connect": [],
+                    "type": 1,
+                    "keyword": "Opt_Parm_Len"
+                }
+            ]
+        },
+        {
+            "OP": {
+                "USE": "UPDATE Message"
+            },
+            "Cond": [
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 35,
+                            "rhs": "23"
+                        }
+                    ],
+                    "connect": [],
+                    "type": 1,
+                    "keyword": "update"
+                }
+            ]
+        },
+        {
+            "OP": {
+                "USE": "KEEPALIVE Message"
+            },
+            "Cond": [
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 32,
+                            "rhs": "0"
+                        }
+                    ],
+                    "connect": [],
+                    "type": 1,
+                    "keyword": "Hold_Time"
+                }
+            ]
+        },
+        {
+            "OP": {
+                "USE": "NOTIFICATION Message"
+            },
+            "Cond": [
+                {
+                    "rfc_cond": [
+                        {
+                            "lhs": "x",
+                            "predicate": 35,
+                            "rhs": "21"
+                        }
+                    ],
+                    "connect": [],
+                    "type": 1,
+                    "keyword": "length"
                 }
             ]
         }
