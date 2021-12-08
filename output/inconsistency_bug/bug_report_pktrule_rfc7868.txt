@@ -6,4 +6,16 @@ RFC Rule:chk_bf(0x0001 - PARAMETER_TYPE >= 96 , use( 0x0001 - PARAMETER_TYPE ))
 RFC Rule:chk_bf(0x0004 - SOFTWARE_VERSION_TYPE >= 64 , use( 0x0004 - SOFTWARE_VERSION_TYPE ))
 [ERROR] Impl Conds do not comply with RFC Conds
 ===================
-Inconsistency bug: 2
+RFC Rule:chk_bf(EIGRP TLV Encoding Format >= real_EIGRP TLV Encoding Format , use( EIGRP TLV Encoding Format ))
+[ERROR] Impl Conds do not comply with RFC Conds
+===================
+RFC Rule:
+chk_bf(Header_Version == 2 , use( Header_Version ))
+[ERROR] Impl Conds do not comply with RFC Conds
+===================
+RFC Rule:
+chk_bf(AS_number >= real_AS_number , use( AS_number ))
+chk_bf(AS_numbers >= 1 &&  AS_numbers <= 65,535 , use( AS_numbers ))
+[ERROR] Impl Conds do not comply with RFC Conds
+===================
+Inconsistency bug: 6
