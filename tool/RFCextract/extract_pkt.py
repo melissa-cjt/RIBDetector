@@ -12,13 +12,13 @@ import json
 from time import *
 import nltk
 import spacy
+import logging
 
 class RFC_PKT_Rules_Extract(Extract, RFC_Extract):
 
 
 	def __init__(self):
 
-		# super().__init_(page=None, pkts=None, fsms=None, errs=None, key_words=None, error_codes=None, state=None, event=None, fields=None, format_key=None, section_file=None, pkt_temp=None, fieldname_left=None, fieldname_right= None, rules_left=None, rules_right=None)
 		super(RFC_PKT_Rules_Extract, self).__init__()
 		RFC_Extract.__init__(self)
 
@@ -33,8 +33,9 @@ class RFC_PKT_Rules_Extract(Extract, RFC_Extract):
 		self.opt_bw = {}
 		self.field_bw_list=OrderedDict()
 		self.mt_if ={}
-		self.struct_configure = None
-		self.Rules= None
+		self.struct_configure = {}
+		self.struct_expansion = {}
+		self.Rules= {}
 		
 		# self.filedname_section={}
 		
@@ -47,6 +48,8 @@ class RFC_PKT_Rules_Extract(Extract, RFC_Extract):
 		f = open(self.section_file,"r")
 		lines = f.readlines()
 		f.close()
+		# print self.key_words
+		# print self.field_bw_list
 
 		message_field = []
 		field_regx = ""
@@ -69,7 +72,9 @@ class RFC_PKT_Rules_Extract(Extract, RFC_Extract):
 		oldname = "SECTION_RULES"
 		for line in lines:
 			pline = line.strip()
-		
+			# print pline
+			# print("-------")
+			# print(pline)
 			if line != "\n":
 
 				space = len(line) -len(pline)
@@ -88,7 +93,8 @@ class RFC_PKT_Rules_Extract(Extract, RFC_Extract):
 				field_section[section_name]["SECTION_RULES"] = []
 				fflag = False
 				continue
-		
+			# print "ok"
+			# print line
 			if not iswrap:
 
 				tmpline = pline.split(rf)
@@ -104,11 +110,13 @@ class RFC_PKT_Rules_Extract(Extract, RFC_Extract):
 
 
 			elif pline.rstrip(rf) in message_field:
-			
+				# print(line +"------------------")
+				# print("is rstrip field")
 				fieldname = pline.rstrip(rf)
 
 				field_regx = pline.replace(fieldname, "(.*)")
-			
+				# print field_regx
+				# print fieldname
 				
 				field_section[section_name][fieldname]=[]
 				struct_list[fieldname] = []
@@ -116,23 +124,29 @@ class RFC_PKT_Rules_Extract(Extract, RFC_Extract):
 				oldspace = space
 				continue
 			elif pline.endswith(rf):
-			
+				# print("========")
+
+				# print("is endswith")
+
 				if self.isfixedValuetitle(pline):
 					continue
 				
 				tmp = pline.rstrip(rf)
-				
+				# print("sss")
+				# if ")" in tmp:
+				# 	continue
+				# print(tmp)
 				doc = nlp(tmp)
 				isother = False
 
 				if not self.isPktMeta(tmp):
 
-				
+				# print(len(doc.noun_chunks))
 					for chunk in doc.noun_chunks:
 						# print("chunk")
 						if chunk.text == tmp:
 							if ")" in tmp:
-								break;
+								break
 							# print(chunk.text, tmp)
 
 							fieldname = tmp
@@ -168,6 +182,8 @@ class RFC_PKT_Rules_Extract(Extract, RFC_Extract):
 					if oldspace <= space:
 						# print(pline)
 						field_section[section_name][fieldname].append(pline)
+						# oldname = fieldname
+						# print("in field", oldspace)
 						
 					else:
 						field_section[section_name]["SECTION_RULES"].append(pline)
@@ -399,7 +415,11 @@ class RFC_PKT_Rules_Extract(Extract, RFC_Extract):
 					tmp =[]
 			else:
 				tmp.append(line.strip())
-		
+				# section_list[section_name].append(line)
+		# print section_list
+		pass
+		# print self.key_words
+
 		self.get_rule_sentence(section_list)
 		
 	
@@ -443,13 +463,24 @@ class RFC_PKT_Rules_Extract(Extract, RFC_Extract):
 		# print(field_section)
 		pkt_rules={}
 
+		# for sec , fname in field_section.items():
+		# 	print(sec)
+		# 	for fn, sen in fname.items():
+		# 		print(fn)
+		# 		print(sen)
+		# mt_if = {}
 		for sec, fname in field_section.items():
+			# print("----------------------")
+			# print("Section:", sec)
+			# print(fname)
 			
 			pkt_rules[sec]={}
 			
 			
 			for fn, sen in fname.items():
-				
+				# print("--------")
+				# print("filename:", fn)
+				# print fn, "==="
 				pkt_rules[sec][fn]={}
 
 				subsen, submeta, subflag = self.get_subfname(sen, fn, rf, nlp)
@@ -459,6 +490,9 @@ class RFC_PKT_Rules_Extract(Extract, RFC_Extract):
 					for subn, subs in subsen.items():
 						pkt_rules[sec][fn][subn] = {}
 
+
+						# print("---")
+						# print("subname:",subn) 
 						self.add_key_words(subn)
 					
 						meta, nw_sen = self.get_pkt_meta(subs)
@@ -471,9 +505,11 @@ class RFC_PKT_Rules_Extract(Extract, RFC_Extract):
 						if not nw_sen:
 							continue
 						s =self.pre_process_rules_nw(nw_sen, fn, True)
-					
+						# print()
+						# print(s)
 						rules = self.get_common_rules_nw(s, False)
-						
+						# print(rules)
+						# # print rules
 
 						pkt_rules[sec][fn][subn]["rules"]=rules
 				
@@ -500,7 +536,7 @@ class RFC_PKT_Rules_Extract(Extract, RFC_Extract):
 					pkt_rules[sec][fn]["rules"]=rules
 
 		# # 			# pkt_rules[sec][fn]["meta"]= meta
-		with open("../output/tmp/pktrule-tmp"+self.section_file.split("/")[-1].split(".")[0]+".json",'w') as f:
+		with open("../output/result_of_extractor/tmp/pktrule-tmp"+self.section_file.split("/")[-1].split(".")[0]+".json",'w') as f:
 			json.dump(pkt_rules, f, indent=4)
 
 		with open("../output/result_of_extractor/meta-info-"+self.section_file.split("/")[-1].split(".")[0]+".json",'r') as f:
@@ -509,16 +545,18 @@ class RFC_PKT_Rules_Extract(Extract, RFC_Extract):
 
 		with open("../output/result_of_extractor/meta-info-"+self.section_file.split("/")[-1].split(".")[0]+".json",'w') as f:
 			json.dump(self.json_tmp, f, indent=4)
-			
+			# print "ok"
+			# json.dump(self.struct_configure, f,indent=4)
+		# print( "===========================")
 		self.write_in_json(pkt_rules)
-		
+		# self.write_meta_in_json(pkt_rules)
 
 	def write_in_json(self, pkt_rules):
 		
 		rule ={}
-		self.Rules={}
-		self.Rules["Rules"]=[]
 		
+		# with open("../output/result_of_extractor/meta-info-"+self.section_file.split("/")[-1].split(".")[0]+".json",'r') as f:
+		# 	self.json_tmp  = json.load(f)
 
 
 		for sec, field in pkt_rules.items():
@@ -528,29 +566,48 @@ class RFC_PKT_Rules_Extract(Extract, RFC_Extract):
 				if "meta"  not in rul.keys() or  "rules" not in rul.keys():
 					continue
 
-				if not rul["meta"] and not rul["rules"]:
+				# if not rul["meta"] and not rul["rules"]:
+				# 	continue
+
+				if not rul["rules"]:
 					continue
 
 				if fn == "SECTION_RULES":
 					rule["OP"] = {"USE": sec}
 
 				else:
+
+					
 					rule["OP"]={"USE": fn}
-					rule["Structure"] = {"struct_name": sec, "field": fn}
+					rule["Structure"] = {"struct_name": sec, "field": fn, "offset": self.getoffset(sec, fn)}
 					# rule["BitWidth"]=self.field_bw_list[sec][fn]
 				if rul["rules"]:
 
 					rule["Cond"]=rul["rules"]
 				
 
-				
+				# if rul["meta"]:
+
+				# 	rule["Cond"] = self.change_meta2rule(rul["meta"], fn)
+
 				self.Rules["Rules"].append(copy.deepcopy(rule))
 				rule={}
-		isExists = os.path.exists("../output/tmp")
+		isExists = os.path.exists("../output/result_of_extractor")
 		if not isExists:
-			os.makedirs("../output/tmp")
-		with open("../output/tmp/pktrule-"+self.section_file.split("/")[-1].split(".")[0]+".json",'w') as f:
+			os.makedirs("../output/result_of_extractor")
+		with open("../output/result_of_extractor/pktrule-"+self.section_file.split("/")[-1].split(".")[0]+".json",'w') as f:
 			json.dump(self.Rules, f, indent=4)
+
+	def getoffset(self, sec, fn):
+		str_list = self.struct_configure["Struct_list"]
+		for stct in str_list:
+			if stct["struct_name"] == sec:
+				for i in range(0, len(stct["fieldname"])):
+					if stct["fieldname"][i] == fn:
+						return i
+		return -1
+	
+
 
 	def write_meta_in_json(self, rules):
 
@@ -578,14 +635,16 @@ class RFC_PKT_Rules_Extract(Extract, RFC_Extract):
 			json.dump(meta_infos, f, indent=4)
 	def get_pkt_rules(self):
 
-		if self.pkt_ftype == 0:    
+		if self.pkt_ftype == 0:    # for dhcp 's type 
 			self.pkt_format_unsepcial()
-		elif self.pkt_ftype == 1:  
+		elif self.pkt_ftype == 1:   # for bgp 's type
 			self.pkt_format_rule()
-			
-		elif self.pkt_ftype == 2:  
+			# self.pkt_format_rule_test()
+		elif self.pkt_ftype == 2:   # option 
 			self.pkt_format_section()
-			
+			# self.pkt_format_unsepcial()
+
+
 		pass 
 	def pkt_format_section(self):
 
@@ -615,6 +674,8 @@ class RFC_PKT_Rules_Extract(Extract, RFC_Extract):
 
 			if line == '\n':
 				if tmp:
+					# tmp = " ".join(tmp)
+					# tmp = self.pre_process_rules_nw(tmp, "",False)
 					tmp = " ".join(tmp)
 					section_list[sname].append(tmp)
 					tmp =[]
@@ -705,13 +766,20 @@ class RFC_PKT_Rules_Extract(Extract, RFC_Extract):
 						
 							section_rule[sec].append(rules)
 
-						
+						# sent = self.mark_keywords(sent)
+						# word = nltk.word_tokenize(sent)
+						# tag = nltk.pos_tag(word)
+						# # print word
+						# sentence, pos = self.get_sent_speach(tag)
+
+						# # print "###########################"
+						# print sentence
+						# rules = self.pos_pattern_match_nw2(sentence, pos,False, True)
+						# print rules
 			print( "-----------")
 
 		print(section_rule) 
 		return section_rule
-		self.write_in_xml(rules)
-	
 
 	def get_field_bw(self, bw):
 
@@ -737,7 +805,8 @@ class RFC_PKT_Rules_Extract(Extract, RFC_Extract):
 			bw_name = re.findall(r'(.*) \(\d+\)',bw_name)
 			bw_name = bw_name[0].strip()
 			
-		
+		# bw_name= bw_name.strip()
+		# print bw_len, bw_name
 		return bw_len, bw_name
 		
 
@@ -800,8 +869,121 @@ class RFC_PKT_Rules_Extract(Extract, RFC_Extract):
 			self.get_stru_bw()
 		elif self.pkt_pos == 4:
 			self.get_picture_bw_simple()
+        
+		self.get_struct_expansion()
 
-		
+
+		isExists = os.path.exists("../output/result_of_extractor")
+		if not isExists:
+			
+			os.makedirs("../output/result_of_extractor")
+		with open("../output/result_of_extractor/meta-info-"+self.section_file.split("/")[-1].split(".")[0]+".json",'w') as f:
+			
+			json.dump(self.struct_configure, f,indent=4)
+		self.write_explicit_rule()
+
+	def write_explicit_rule(self):
+
+		self.Rules["Rules"]=[]
+
+		for pkt_struct in self.struct_configure["Struct_list"]:
+
+			if 0 not in pkt_struct["value"]:
+				count = sum(pkt_struct["value"])
+				rule = {}
+				rule["OP"]={"USE": pkt_struct["struct_name"],"Implicit": 1}
+				rule["Structure"]={"structr_name": pkt_struct["struct_name"]}
+				rule["Cond"]=[{"rfc_cond":[{"lhs": "x", "predicate": 35, "rhs": count }], "connect":[], "type":1, "keyword": pkt_struct["struct_name"]}]
+
+				self.Rules["Rules"].append(copy.deepcopy(rule))
+			if "TLV" in pkt_struct["struct_name"]:
+				rule = {}
+				rule["OP"]={"USE": pkt_struct["struct_name"],"Implicit": 1}
+				rule["Structure"]={"structr_name": pkt_struct["struct_name"]}
+				rule["Cond"]=[{"rfc_cond":[{"lhs": "x", "predicate": 35, "rhs": "y" }], "connect":[], "type":1, "keyword": pkt_struct["struct_name"]}]
+
+				self.Rules["Rules"].append(copy.deepcopy(rule))
+
+	def get_struct_expansion(self):
+		f = open(self.section_meta_file, "r")
+		lines = f.readlines()
+		f.close()
+		section_num = {}
+
+		for i in range(0, len(lines)):
+			if self.isSectiontitle(lines[i]):
+				name = self.get_section_title(lines[i])
+
+				num = lines[i].replace(name, "").strip()[:-1]
+				section_num[num] = name
+				# logging.info(section_num)
+				# logging.info(name)
+
+				# self.struct_expansion[name]=[]
+			
+			if "see Section " in lines[i].strip():
+				tmp = re.findall(r'\|(.*) \(see Section (.*)\)', lines[i].strip())
+				fname = tmp[0][0].strip()
+				sec = tmp[0][1]
+				
+
+				if fname == "":
+					db_fname = []
+					linum = i-1
+					while "-+-+-+-" not in lines[linum]:
+						tmp1 = re.findall(r'\|(.*)\|', lines[linum])
+
+					
+						db_fname.append(tmp1[0].replace("(variable length)","").strip())
+						linum -= 1
+					db_fname.reverse()
+					# logging.info(db_fname)
+					fname = " ".join(db_fname)
+
+				# logging.info((fname,sec))
+				if name in self.struct_expansion.keys():
+
+					self.struct_expansion[name].append((fname,sec))
+				else:
+					self.struct_expansion[name]=[]
+					self.struct_expansion[name].append((fname, sec))
+				
+						
+
+				# logging.info(sec)
+		logging.info(section_num)	
+		logging.info(self.struct_expansion)
+		str_list_exp ={}
+
+		for k, fs in self.struct_expansion.items():
+
+			
+
+			for str_list in self.struct_configure["Struct_list"]:
+
+				if str_list["struct_name"] == k:
+					tmp_str = copy.deepcopy(str_list)
+					logging.info(tmp_str)
+
+
+					for f in fs:
+						idx = tmp_str["fieldname"].index(f[0])
+
+						for str_li in self.struct_configure["Struct_list"]:
+
+							if str_li["struct_name"]  ==  section_num[f[1]]:
+								value_list = str_li["value"]
+						tmp_str["value"][idx] = value_list
+						tmp_str["fieldname"][idx] =tmp_str["fieldname"][idx]+"  "+str(len(value_list))
+			tmp_str["struct_name"] = tmp_str["struct_name"]+"_EXPAND"
+			tmp_str["value"] = self.flatten(tmp_str["value"])
+			logging.info(tmp_str)
+			self.struct_configure["Struct_list"].append(copy.deepcopy(tmp_str))
+
+	def flatten(self, li):
+		return sum(([x] if not isinstance(x, list) else self.flatten(x) for x in li), [])
+
+
 	def get_asn_bw(self):
 
 		f =open(self.section_meta_file, "r")
@@ -839,12 +1021,19 @@ class RFC_PKT_Rules_Extract(Extract, RFC_Extract):
 		bw_len_flag = False
 		space_flag = False
 		bw_name = ""
-
-		self.struct_configure={
-			"Struct_list":[]
-		}
 		
-
+        # isExists = os.path.exists("tmp/"+self.section_meta_file.replace(".txt", ".json"))
+	
+		path = self.section_meta_file.replace(".txt", ".json")
+		logging.info(path)
+		isExists = os.path.exists(path)
+		if isExists:
+			logging.info("is ok!")
+			with open(path, "r") as f:
+				self.struct_configure = json.load(f)
+		else:
+			self.struct_configure={"Struct_list":[]}
+		
 		# print( "GET PACKET FIELD BITWIDTH IN PICTURE")
 
 		for i in range(len(lines)):
@@ -940,6 +1129,16 @@ class RFC_PKT_Rules_Extract(Extract, RFC_Extract):
 			tmp_str = {}
 			if not v:
 				continue 
+			ff = False
+			# if we have the structure meta in the dir, we use it.
+			for sn in self.struct_configure["Struct_list"]:
+				if sn["struct_name"] == k:
+					ff = True
+					break
+			if ff:
+				continue
+            # if k in self.struct_configure["Struct_list"].keys():
+            #     continue
 			tmp_str["struct_name"]=k
 			tmp_str["value"]=[]
 			tmp_str["fieldname"]=[]
@@ -950,16 +1149,7 @@ class RFC_PKT_Rules_Extract(Extract, RFC_Extract):
 				self.add_key_words(kk)
 			self.struct_configure["Struct_list"].append(tmp_str)
 		# print self.struct_configure
-		isExists = os.path.exists("../output/result_of_extractor")
-		if not isExists:
-			# print "ok"
-			os.makedirs("../output/result_of_extractor")
-		# print("Meta-info write into ../output/result_of_extractor/meta-info-"+self.section_file.split("/")[-1].split(".")[0]+".json")
 
-		with open("../output/result_of_extractor/meta-info-"+self.section_file.split("/")[-1].split(".")[0]+".json",'w') as f:
-			# print "ok"
-			json.dump(self.struct_configure, f,indent=4)
-		# print( "===========================")
 
 	def get_tlv_field_bw(self, line):
 
@@ -991,6 +1181,9 @@ class RFC_PKT_Rules_Extract(Extract, RFC_Extract):
 		f = open(self.section_meta_file, "r")
 		lines = f.readlines()
 		f.close()
+
+
+       
 
 		self.opt_bw={}
 

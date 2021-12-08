@@ -1,4 +1,7 @@
 import re
+# from networkx.generators.lattice import triangular_lattice_graph
+# from networkx.generators.random_graphs import fast_gnp_random_graph
+# from transitions.extensions import GraphMachine as Machine
 from transitions import Machine
 # import numpy as np
 import copy
@@ -6,6 +9,7 @@ import sys
 # from xml.etree import ElementTree 
 import time
 import json
+import os.path
 # import networkx as nx
 # from networkx.algorithms import isomorphism
 from collections import Counter
@@ -59,7 +63,9 @@ class Compare:
        
         # with open(filename, 'r') as f:
         #     json_data = json.load(f)
-        
+       
+
+
         self.rfc_filename = rfcf
         self.prog_filename = progf
 
@@ -205,10 +211,16 @@ class Compare:
         for pev in pevent:
 
             pds = self.state_change(self.prog_machine, self.prog_model, pstate, pev )
+            # print("-----------")
+            # print(pstate, pevent, pds)
+            
 
+            # if self.isequalDstate(rds, pds):
             if self.map_states[rds]  == pds:
                 flag = True
                 self.test_prog.append(self.add_state_change(pstate, pev, pds))
+            # print pstate, pev, pds
+            # break
 
         return flag
 
@@ -277,7 +289,12 @@ class Compare:
                 trans_flag = False
                 unflag = False
                 pstate, pevent = self.getProgData(rstate, revent)
-
+                # pstate = self.map_states[rstate]
+                # if revent not in tmp_event.keys():
+                #     continue
+                # pevent = tmp_event[revent]
+                # print (pstate, pevent)
+                # if not pevent 
                 ps_size = len(pstate)
                 pe_size = len(pevent)
 
@@ -330,7 +347,10 @@ class Compare:
                     # self.err_log(rstate, revent, rds, 3)
                     continue
                 pevent = tmp_event[revent]
-         
+                # print(pstate, pevent)
+                # if not pevent 
+                # print(rstate, revent, rds)
+                # print(pstate, pevent)
                 trans_flag = self.single_compare(pstate, pevent, rds)
                 if not trans_flag:
                     
@@ -421,7 +441,10 @@ class Compare:
 
         out_edge = sorted(out_edge.items(),key = lambda x:x[1],reverse = True)
         in_edge = sorted(in_edge.items(),key = lambda x:x[1],reverse = True)
-
+        # print ("out")
+        # print (out_edge)
+        # print ("in")
+        # print (in_edge)
         return out_edge, in_edge
 
 
@@ -697,7 +720,20 @@ class Compare:
             # print ("====")
                 
         # print(self.map_events)    
+      
+        # get the next state of the initail state
+        # self.get_out_state(self.rfc_transitions, self.initial_rfc_state)
+        # self.get_out_state(self.prog_transitions, self.initial_prog_state)
+       
+        # get the state which has only one dest state
 
+        # rout_edge_state = self.get_out_edge(self.rfc_transitions)
+        # pout_edge_state = self.get_out_edge(self.prog_transitions)
+        # print("============")
+        # for k , v in rout_edge_state.items():
+        #     print(k, v, len(v))
+        # for k,v in pout_edge_state.items():
+        #     print(k, v, len(v))
     def minimize_rfc_transitions(self):
         
         revent = self.get_src_dest(self.rfc_transitions)
@@ -969,7 +1005,7 @@ class Compare:
                             break
                         else:
                             break
-               
+                    # for the len(rs) > len(ps) and there is no new ps can mapping with the rs
                     if count == 0:   
                         flag = False
         # print("has finished")            
@@ -1003,6 +1039,15 @@ class Compare:
             rs_edge = self.static_edge(self.rfc_transitions)
         ps_edge = self.static_edge(self.prog_transitions)
 
+        # print(rs_edge)
+        # for k, v in rs_edge.items():
+        #     print(k, len(v))
+        # print(ps_edge)
+        # for k, v in ps_edge.items():
+        #     print(k, len(v))
+
+        # mapping  A - pevents -> B   the number of pevents is 1 
+        # print(self.prog_transitions)
         self.map_event_one(rs_edge, ps_edge)
         tmp_prog_trans = self.map_transitions(self.prog_transitions, self.map_states, [])  
 
@@ -1017,6 +1062,18 @@ class Compare:
         pevent = self.get_src_dest(tmp_prog_trans)
         # pevent = self.get_src_dest(self.prog_transitions)
 
+        # for k, v in revent.items():
+        #     print(k)
+        #     for vv in v:
+        #         print(vv) 
+       
+        # for k, v in pevent.items():
+        #     print(k)
+        #     for vv in v:
+        #         print(vv)  
+        # print("-------------")  
+
+        # mapping the event transition state is the same
 
         self.map_event_equal_state(revent, pevent)
 
@@ -1079,6 +1136,12 @@ class Compare:
         pass
 
     def mul_fsm_check(self):
+
+        # print(self.certain_event)
+
+        # tmp_event = copy.copy(self.map_events)
+
+        # print(tmp_event)
         
         rhit_event = []
 
@@ -1089,7 +1152,15 @@ class Compare:
                     rhit_event.append(r)
                 continue
         pass
-    
+        # print (rhit_event)
+        # print(self.certain_event)
+        # print(self.rfc_ev_min)
+        # print(self.min_rfc_event)
+
+        # print(hit_event)
+        # print("-------")
+        # print(list(set(self.rfc_ev) - set(hit_event)))
+        # use_event_map ={}
         nohitP = len(self.prog_ev) - len(self.certain_event)
         if self.has_min:
             nohitR = len(self.rfc_ev_min) - len(rhit_event)
@@ -1130,9 +1201,18 @@ class Compare:
             # print(tmp_event)
             
             rp_event = self.p2revmap(tmp_event)
-
+           
+            # print("Roud: ", count)
+            # print("Not hit rfc event: ")
+            # print(list(set(nohit_revent) - set(c)))
+            # print("Mapping:")
+            # print(rp_event)
+            # print(tmp_event)
+            # print(self.rfc_ev_min)
             if self.has_min:
-
+                # print("min")
+                # print(self.min_rfc_transitions)
+                # print(self.rfc_ev_min)
                 Err = self.compare_fsm(self.min_rfc_transitions, self.rfc_ev_min, rp_event)
             else:
                 Err = self.compare_fsm(self.rfc_transitions, self.rfc_ev, rp_event)
@@ -1144,6 +1224,9 @@ class Compare:
             if min > Err:
                 min = Err
 
+            # print("---------------------")
+        
+        # print("The most similiar FSM missing:", min)
 
 
     def check_fsm(self):
@@ -1166,7 +1249,11 @@ class Compare:
         else:   
 
             res = self.greed_state(self.initial_rfc_state, self.initial_prog_state)
- 
+        # print("State map: ")
+        # print(self.map_states)
+
+        # self.map_states={'Active 2': '8', 'PASSIVE': '1', 'Active 0': '2', 'Active 3': '16', 'Active 1': '4'}
+        # print(self.map_states)
         
         if not self.map_states:
             sys.exit()
@@ -1175,9 +1262,12 @@ class Compare:
 
         # start event and modal check ===========================
         self.has_min = self.minimize_rfc_transitions()
-
+        # print(self.has_min)
+        # print("min")
+        # print(self.map_states)
         self.map_certain_event()
-
+        # print("MAP event: ")
+        # print(self.map_events)
         
         
         # # # print(self.prog_transitions) 
@@ -1191,12 +1281,12 @@ if __name__ == "__main__":
     time_start = time.time()
     fsmcp = Compare()
 
-
+    if os.path.exists(sys.argv[1]) and os.path.exists(sys.argv[2]):
   
-    fsmcp.parse_config1(sys.argv[1], sys.argv[2])
-    
-    
-    fsmcp.check_fsm()
+        fsmcp.parse_config1(sys.argv[1], sys.argv[2])
+        
+        
+        fsmcp.check_fsm()
    
     # time_end = time.time()
     # time_sum = time_end - time_start

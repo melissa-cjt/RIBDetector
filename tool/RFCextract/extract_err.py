@@ -148,7 +148,7 @@ class RFC_ERR_Rules_Extract(Extract, RFC_Extract):
 	def pre_read_pkt_rule(self):
 		
 		
-		with open("../output/tmp/pktrule-tmp"+self.section_file.split("/")[-1].split(".")[0]+".json",'r') as f:
+		with open("../output/result_of_extractor/tmp/pktrule-tmp"+self.section_file.split("/")[-1].split(".")[0]+".json",'r') as f:
 			self.pkt_rul  = json.load(f)
 		# print(self.pkt_rul)
 
@@ -279,7 +279,9 @@ class RFC_ERR_Rules_Extract(Extract, RFC_Extract):
 						else:
 							common_rules += copy.deepcopy(rules)
 				
-				
+				# 	print errc 
+				# print(common_rules)
+				# print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 					
 				if eflag:
 				

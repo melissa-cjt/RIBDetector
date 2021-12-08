@@ -3,9 +3,13 @@ import sys
 from xml.etree import ElementTree 
 import os
 import json
+import logging 
+
 
 	
 class Extract(object):
+
+	logging.basicConfig(level=logging.INFO)
 
 	def __init__(self):
 
@@ -120,46 +124,9 @@ class Extract(object):
 		self.states = []
 		self.events = []
 		self.fields = {}
+		# if "packet_format" in self.json_data.keys():
 
-
-	# parse packet configure file
-	def parse_config_file(self, filename):
-		# print "ok"
-
-		root = ElementTree.parse(filename)
-
-		self.page = root.findall("page")[0].text
-		self.pkts = root.findall("packet_format")
-		self.fsms = root.findall("fsm")
-		self.errs = root.findall("error_handling")
-
-		self.key_words_file = self.xml_find(root, "key_words_file")
-
-        
-		if self.key_words_file:
-
-			self.read_key_words(self.key_words_file)
-		else:
-
-			self.key_words=[]
-
-
-		self.key_words = self.xml_find(root, "key_words")
-
-		if self.key_words:
-
-			kws = root.findall("key_words")[0]
 		
-			for kw in kws:
-				
-				self.add_key_words(kw.text)
-		else:
-			self.key_words=[]
-		
-		self.error_codes = {}
-		self.states = []
-		self.events = []
-		self.fields = {}
 
 
 	def clear_space(self, lines):
