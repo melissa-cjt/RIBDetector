@@ -1,0 +1,11 @@
+Frrouting
+https://github.com/FRRouting/frr/issues/8542
+https://github.com/FRRouting/frr/issues/8515
+https://github.com/FRRouting/frr/issues/5588
+https://github.com/FRRouting/frr/issues/7144
+Bird
+https://bird.network.cz/pipermail/bird-users/2022-January/015905.html
+https://bird.network.cz/pipermail/bird-users/2019-December/014088.html
+Openbsd
+https://marc.info/?l=openbsd-bugs&m=161918047102825&w=2
+https://marc.info/?l=openbsd-bugs&m=161907655520009&w=2
